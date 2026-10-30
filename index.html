@@ -284,8 +284,12 @@ h1, h2, h3 { margin: 0; text-wrap: balance; }
   background-size: 250% 100%; animation: sheen 2.6s ease-in-out infinite;
 }
 @keyframes sheen { from { background-position: 150% 0; } to { background-position: -100% 0; } }
-.pc-sprite { position: absolute; right: 6px; top: 40px; width: 60px; height: auto; image-rendering: pixelated; opacity: .95; pointer-events: none; }
-.pcard .pc-name, .pcard .pc-full, .pcard .pc-alt, .pcard .pc-nat { padding-right: 52px; }
+.pc-face { position: absolute; right: 8px; bottom: 52px; width: 68px; height: 68px; pointer-events: none; border-radius: 6px;
+  background: radial-gradient(circle at 50% 40%, rgba(255, 255, 255, .55), rgba(255, 255, 255, 0) 70%); }
+.pc-face.bust { image-rendering: pixelated; }
+.pc-face.photo { object-fit: cover; object-position: 50% 15%; border: 2px solid rgba(10, 17, 66, .7); box-shadow: 0 2px 0 rgba(0, 0, 0, .25); background: #0b1245; }
+.pcard .pc-name { padding-right: 34px; }
+.pcard .pc-nat { padding-right: 70px; }
 .pcard .pc-tech, .pcard .pc-bond { position: relative; z-index: 1; }
 .pc-key { position: absolute; right: 8px; bottom: 6px; font-family: var(--f-pixel); font-size: var(--s-xs); opacity: .55; }
 .pc-new { position: absolute; right: -28px; bottom: 12px; z-index: 2; width: 100px; text-align: center; background: var(--crimson); color: #fff; font-family: var(--f-pixel); font-size: 10px; letter-spacing: .06em; padding: 2px 0; transform: rotate(-45deg); box-shadow: 0 2px 0 rgba(0,0,0,.3); pointer-events: none; }
@@ -455,6 +459,10 @@ h1, h2, h3 { margin: 0; text-wrap: balance; }
 .filters { display: flex; flex-direction: column; gap: 10px; }
 .album-grid { display: grid; gap: 8px; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
 .acard { position: relative; display: flex; flex-direction: column; gap: 1px; padding: 8px; border-radius: 6px; color: #141a3d; border: 2px solid #0a1142; min-height: 104px; }
+.ac-face { position: absolute; right: 6px; top: 22px; width: 44px; height: 44px; border-radius: 4px; pointer-events: none; }
+.ac-face.bust { image-rendering: pixelated; }
+.ac-face.photo { object-fit: cover; object-position: 50% 15%; border: 2px solid rgba(10, 17, 66, .6); }
+.acard .ac-n, .acard .ac-t { padding-right: 48px; }
 .acard.missing { background: repeating-linear-gradient(45deg, #1a2363 0 8px, #172057 8px 16px); color: var(--muted); border-style: dashed; border-color: rgba(232, 236, 255, .35); }
 .ac-r { font-family: var(--f-display); font-size: 1.3rem; line-height: 1; }
 .ac-pos { position: absolute; top: 8px; right: 8px; font-size: var(--s-xs); font-weight: 900; }
@@ -518,6 +526,8 @@ h1, h2, h3 { margin: 0; text-wrap: balance; }
 .cutin-inner { transform: skewY(7deg); text-align: center; padding: 0 18%; }
 .cutin-sprites { position: absolute; left: 14%; bottom: -6px; display: flex; align-items: flex-end; transform: skewY(7deg); animation: spriteIn .35s .05s cubic-bezier(.2, .9, .3, 1.2) both; pointer-events: none; }
 .cutin-sprite { width: clamp(64px, 11vw, 120px); height: auto; image-rendering: pixelated; filter: drop-shadow(4px 4px 0 rgba(0, 0, 0, .55)); }
+.cutin-photo { width: clamp(84px, 13vw, 150px); aspect-ratio: 3 / 4; object-fit: cover; object-position: 50% 12%; border: 3px solid #fff; border-radius: 4px; box-shadow: 5px 5px 0 rgba(0, 0, 0, .55); background: #0b1245; }
+.cutin-photo.s1, .cutin-photo.s2 { width: clamp(60px, 9vw, 110px); margin-left: -12px; }
 .cutin-sprite.s1, .cutin-sprite.s2 { width: clamp(48px, 8vw, 90px); margin-left: -10px; opacity: .92; }
 .cutin-opp .cutin-sprites { left: auto; right: 14%; transform: skewY(7deg) scaleX(-1); }
 @keyframes spriteIn { from { opacity: 0; translate: -60px 0; } to { opacity: 1; translate: 0 0; } }
@@ -605,6 +615,143 @@ button.lb.chem:hover, button.lb.chem:focus-visible { border-color: var(--good); 
 .all-bonds summary { cursor: pointer; color: var(--muted); margin: 6px 0; }
 .lbl.sm { font-size: var(--s-xs); margin-top: 10px; }
 .modal-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+@media (max-width: 560px) {
+  .pc-face { width: 46px; height: 46px; bottom: 54px; right: 6px; }
+  .pcard .pc-name { padding-right: 0; font-size: 1.08rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pcard .pc-full, .pcard .pc-alt, .pcard .pc-nat { padding-right: 48px; }
+  .ac-face { width: 36px; height: 36px; }
+}
+
+/* ---------- ficha de jugador ---------- */
+button.slot { font: inherit; cursor: pointer; }
+button.slot.filled:hover, button.slot.filled:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+.pc-info { position: absolute; top: 12px; right: 52px; z-index: 2; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center;
+  background: rgba(10, 17, 66, .85); color: #fff; font: 900 13px/1 var(--f-body); font-style: italic; cursor: pointer; border: 2px solid rgba(255, 255, 255, .7); }
+.pc-info:hover { background: var(--gold); color: var(--gold-ink); }
+.acard.clickable { cursor: pointer; }
+.acard.clickable:hover, .acard.clickable:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.pf { display: flex; flex-direction: column; gap: 6px; }
+.pf-head { display: flex; gap: 14px; align-items: center; padding: 10px; border-radius: 8px; color: #141a3d; border: 3px solid #0a1142; }
+.pf-face { width: 128px; height: 128px; flex: none; border-radius: 8px; background: radial-gradient(circle at 50% 40%, rgba(255, 255, 255, .6), rgba(255, 255, 255, 0) 70%); }
+.pf-face.bust { image-rendering: pixelated; }
+.pf-face.photo { object-fit: cover; object-position: 50% 15%; border: 3px solid #0a1142; background: #0b1245; }
+.pf-id { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.pf-top { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.pf-r { font-family: var(--f-display); font-size: 2.2rem; line-height: 1; }
+.pf-name { font-family: var(--f-display); font-size: 1.45rem; line-height: 1.1; margin: 2px 0 0; overflow-wrap: anywhere; }
+.pf-alt { font-size: var(--s-sm); opacity: .75; }
+.pf-nat { font-weight: 800; }
+.pf-team { font-size: var(--s-sm); }
+.pf-tech { list-style: none; padding: 0; margin: 4px 0; display: grid; gap: 6px; }
+.pf-tech li { display: grid; grid-template-columns: 28px 1fr auto; grid-template-rows: auto auto; gap: 0 8px; align-items: center;
+  background: #0b1245; border: 2px solid rgba(232, 236, 255, .2); border-radius: 4px; padding: 6px 8px; }
+.pt-ic { grid-row: span 2; font-size: 1.2rem; text-align: center; }
+.pt-n { display: flex; flex-direction: column; min-width: 0; }
+.pt-n b { color: var(--gold); }
+.pt-n small { color: var(--muted); font-size: var(--s-xs); }
+.pt-t { font-size: var(--s-xs); color: var(--muted); text-align: right; }
+.pt-p { grid-column: 3; font-size: .8rem; color: var(--gold); letter-spacing: 1px; text-align: right; }
+.pf-you { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: var(--s-sm); }
+@media (max-width: 560px) { .pf-face { width: 88px; height: 88px; } .pf-name { font-size: 1.2rem; } .pc-info { right: 48px; top: 11px; } }
+
+/* ---------- cuenta ---------- */
+.acc-box { display: flex; flex-direction: column; gap: 10px; padding: 16px; max-width: 620px; }
+.acc-form { display: grid; gap: 8px; }
+.acc-form.row { grid-template-columns: 1fr auto; align-items: end; }
+.acc-form.row .lbl, .acc-form.row .muted { grid-column: 1 / -1; }
+.acc-or { margin: 4px 0 0; }
+.acc-prov { display: flex; gap: 8px; flex-wrap: wrap; }
+.acc-status { font-size: var(--s-sm); color: var(--muted); margin: 0; }
+.acc-status.ok { color: var(--good); }
+.acc-status.err { color: #ff8a8a; }
+.acc-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+.h3 { font-family: var(--f-display); font-weight: 400; font-size: 1.3rem; margin: 0; }
+.table.board td.bn { text-align: left; font-weight: 800; }
+.table.board tr.me td { color: var(--gold); }
+@media (max-width: 560px) { .acc-form.row { grid-template-columns: 1fr; } }
+
+/* ---------- monedas y recompensa ---------- */
+.coin-chip { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px; background: #0b1245; border: 2px solid var(--gold); color: var(--gold); font-weight: 900; }
+.coin-chip b { font-family: var(--f-display); font-weight: 400; font-size: 1.1rem; }
+.reward { text-align: center; padding: 14px; margin: 10px auto; max-width: 560px; }
+.rw-head { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.rw-n { font-family: var(--f-display); font-weight: 400; font-size: 1.6rem; color: var(--gold); }
+.rw-n.err { font-family: var(--f-body); font-size: var(--s-sm); color: #ff8a8a; }
+.rw-parts { font-size: var(--s-xs); color: var(--muted); margin: 6px 0; }
+.gold-txt { color: var(--gold); }
+
+/* ---------- gacha ---------- */
+.banner-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; margin: 8px 0; scrollbar-width: thin; }
+.banner-tab { flex: none; display: inline-flex; gap: 6px; align-items: center; padding: 8px 12px; border-radius: 6px; border: 2px solid rgba(232, 236, 255, .3); background: #0b1245; color: var(--text); font: inherit; font-weight: 800; cursor: pointer; }
+.banner-tab.sel { border-color: var(--gold); color: var(--gold); box-shadow: 0 0 0 2px rgba(255, 201, 60, .25); }
+.banner { position: relative; display: grid; grid-template-columns: 1.2fr 1fr; gap: 14px; padding: 18px; border-radius: 10px; border: 3px solid var(--rim);
+  background: linear-gradient(135deg, #1b2a8c, #0f1536 70%); overflow: hidden; }
+.banner::before { content: ""; position: absolute; inset: -40%; background: repeating-conic-gradient(from 0deg, rgba(255, 255, 255, .05) 0 8deg, transparent 8deg 18deg); animation: spin 40s linear infinite; pointer-events: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.banner > * { position: relative; }
+.banner-asia { background: linear-gradient(135deg, #8c1b2a, #2a0f36 75%); }
+.banner-latam { background: linear-gradient(135deg, #1b7a3a, #0f2a36 75%); }
+.banner-europe { background: linear-gradient(135deg, #1b3f8c, #0f1536 75%); }
+.banner-world { background: linear-gradient(135deg, #8c6a1b, #36210f 75%); }
+.banner-clubs { background: linear-gradient(135deg, #5a1b8c, #150f36 75%); }
+.banner-legends { background: linear-gradient(135deg, #b8860b, #3a1500 75%); border-color: var(--gold); }
+.banner-title { font-family: var(--f-display); font-weight: 400; font-size: 1.8rem; margin: 0 0 4px; }
+.rates { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
+.rate { padding: 2px 8px; border-radius: 4px; font-size: var(--s-xs); color: #141a3d; font-weight: 800; }
+.rate.r-legend { background: linear-gradient(150deg, #ffe27a, #ff8a5c 45%, var(--crimson)); }
+.rate.r-gold { background: var(--gold); }
+.rate.r-silver { background: var(--silver); }
+.rate.r-bronze { background: #d9a066; }
+.banner-feat { display: flex; flex-direction: column; gap: 6px; }
+.feat-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.feat { display: flex; flex-direction: column; align-items: center; width: 74px; padding: 4px; border-radius: 6px; border: 2px solid #0a1142; color: #141a3d; cursor: pointer; font: inherit; }
+.feat b { font-family: var(--f-display); font-weight: 400; line-height: 1; }
+.feat small { font-size: .62rem; font-weight: 800; max-width: 66px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.feat-face { width: 54px; height: 54px; }
+.feat-face.bust, .pull-face.bust, .coll-face.bust, .pick-face.bust { image-rendering: pixelated; }
+.feat-face.photo, .pull-face.photo, .coll-face.photo, .pick-face.photo { object-fit: cover; object-position: 50% 15%; border-radius: 4px; }
+.pull-row { grid-column: 1 / -1; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.pull-btn { display: flex; flex-direction: column; align-items: center; min-width: 170px; }
+.pull-btn small { font-size: var(--s-sm); opacity: .85; }
+.pulling { text-align: center; animation: pulse 1s ease-in-out infinite; }
+.pull-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.pull-card { position: relative; display: flex; flex-direction: column; align-items: center; gap: 1px; padding: 8px 4px; border-radius: 8px; border: 3px solid #0a1142; color: #141a3d; cursor: pointer; font: inherit;
+  animation: flipin .55s cubic-bezier(.2, .9, .3, 1.2) both; animation-delay: calc(var(--i) * 120ms); overflow: hidden; }
+.pull-card.r-legend { background: linear-gradient(150deg, #ffe27a 0%, #ff8a5c 45%, var(--crimson) 100%); box-shadow: 0 0 18px rgba(255, 201, 60, .8); }
+.pull-card.r-gold { background: linear-gradient(160deg, #fff1b8, var(--gold)); box-shadow: 0 0 10px rgba(255, 201, 60, .5); }
+.pull-card.r-silver { background: linear-gradient(160deg, #ffffff, var(--silver)); }
+.pull-card.r-bronze { background: linear-gradient(160deg, #f6dcc0, #d9a066); }
+.pull-face { width: 72px; height: 72px; }
+.pull-r { font-family: var(--f-display); font-size: 1.3rem; line-height: 1; }
+.pull-pos { font-size: .62rem; font-weight: 900; }
+.pull-n { font-size: .75rem; font-weight: 900; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pull-t { font-size: .6rem; font-weight: 800; opacity: .75; text-transform: uppercase; }
+.pull-new { position: absolute; top: 4px; left: 4px; background: var(--crimson); color: #fff; font-size: .6rem; font-weight: 900; padding: 1px 5px; border-radius: 3px; }
+.pull-dup { position: absolute; top: 4px; right: 4px; background: rgba(10, 17, 66, .8); color: #fff; font-size: .62rem; font-weight: 900; padding: 1px 5px; border-radius: 3px; }
+
+/* ---------- mi equipo ---------- */
+.team-side { display: flex; flex-direction: column; gap: 6px; }
+.slot.oop .slot-r { color: var(--crimson); }
+.coll-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 6px; }
+.coll-card { position: relative; display: flex; flex-direction: column; align-items: center; padding: 6px 4px; border-radius: 6px; border: 2px solid #0a1142; color: #141a3d; cursor: pointer; font: inherit; }
+.coll-card.in { outline: 3px solid var(--good); outline-offset: -3px; }
+.coll-card b { font-family: var(--f-display); font-weight: 400; line-height: 1; }
+.coll-face { width: 54px; height: 54px; }
+.cc-pos { font-size: .6rem; font-weight: 900; }
+.cc-n { font-size: .7rem; font-weight: 900; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cc-x { position: absolute; top: 3px; right: 4px; font-size: .62rem; font-weight: 900; }
+.pick-list { display: grid; gap: 4px; max-height: 55vh; overflow-y: auto; }
+.pick-row { display: grid; grid-template-columns: 36px 34px 34px 1fr auto; align-items: center; gap: 6px; padding: 4px 8px; border-radius: 6px; border: 2px solid #0a1142; color: #141a3d; cursor: pointer; font: inherit; text-align: left; }
+.pick-row small { grid-column: 4 / -1; }
+.pick-face { width: 34px; height: 34px; }
+.pick-row b { font-family: var(--f-display); font-weight: 400; font-size: 1.1rem; }
+.pr-pos { font-size: .7rem; font-weight: 900; }
+.pr-n { font-weight: 800; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 760px) {
+  .banner { grid-template-columns: 1fr; padding: 14px; }
+  .pull-grid { grid-template-columns: repeat(3, 1fr); }
+  .pull-btn { min-width: 0; flex: 1; }
+}
 
 </style>
 </head>
@@ -618,6 +765,16 @@ button.lb.chem:hover, button.lb.chem:focus-visible { border-color: var(--good); 
 <div id="fx-layer" aria-hidden="true"></div>
 <div id="toasts" role="status" aria-live="polite"></div>
 <div id="modal" hidden></div>
+<script>
+// Configuración de cuentas (Supabase). La clave "anon" es pública por diseño:
+// la seguridad la ponen las políticas RLS y las funciones del servidor.
+window.CT_CONFIG = {
+  supabaseUrl: "https://xhxgzkmvoddxrmugqtpi.supabase.co",
+  supabaseAnonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhoeGd6a212b2RkeHJtdWdxdHBpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMzNzQzMDQsImV4cCI6MjEwODk1MDMwNH0.yj4DT6OcpzSgUnb-00Mz3HVOHq3fQSYJ3uvF9NCOxh4",
+  // proveedores OAuth activados en Supabase → Authentication → Providers (p. ej. ["google", "discord"])
+  oauth: []
+};
+</script>
 <script>
 /* ---- 01-data.js ---- */
 /* ==========================================================================
@@ -1991,7 +2148,7 @@ button.lb.chem:hover, button.lb.chem:focus-visible { border-color: var(--good); 
     } else {
       // muestreo ponderado: los secundarios (menos de 80) salen algo menos para que la plantilla ampliada no diluya las tiradas
       const left = pool.slice(); players = [];
-      const w = (p) => (p.r >= 88 ? 1.1 : p.r >= 80 ? 1 : 0.7);
+      const w = (p) => (p.r >= 88 ? 1.25 : p.r >= 80 ? 1 : 0.55);
       while (players.length < n && left.length) { const p = rng.weighted(left, w); players.push(p); left.splice(left.indexOf(p), 1); }
     }
     d.rolls++;
@@ -2018,6 +2175,130 @@ button.lb.chem:hover, button.lb.chem:focus-visible { border-color: var(--good); 
     const now = new Set(CT.activeBonds(d.slots.filter((s) => s.player).map((s) => s.player)).map((b) => b.id));
     const after = CT.activeBonds(d.slots.filter((s) => s.player).map((s) => s.player).concat([p]));
     return after.filter((b) => !now.has(b.id) && b.members.includes(p.names.orig));
+  };
+})(typeof window !== "undefined" ? window : globalThis);
+
+/* ---- 04b-gacha.js ---- */
+/* ==========================================================================
+   Gacha y economía: monedas por partida, banners y tiradas.
+   Lógica pura (sin DOM). La misma tabla de premios y probabilidades está
+   en supabase/schema.sql para que, con cuenta, todo se resuelva en el servidor.
+   ========================================================================== */
+(function (root) {
+  const CT = root.CT;
+
+  /* ---------- Monedas por partida ----------
+     Ganar el Mundial en Profesional = 500 monedas = media tirada x10. */
+  CT.ECON = {
+    welcome: 1000,                                   // regalo al empezar (una x10)
+    stage: { group: 60, qf: 120, sf: 200, final: 300, champ: 500 },
+    diff: { amateur: 0.5, pro: 1, legend: 1.6 },
+    mode: { classic: 1, daily: 1, blind: 1.15, hardcore: 1.3, survival: 1 },
+    survPerWin: 35, survMaxWins: 15,
+    practice: 0.25,                                  // reto diario repetido
+    dailyBonus: 50,                                  // primera vez que completas el reto del día
+    pity: 60                                         // a las 60 tiradas sin leyenda, la siguiente lo es
+  };
+  CT.runReward = function ({ mode, diff, stage, wins, practice }) {
+    const E = CT.ECON;
+    const dm = E.diff[diff] || 1, mm = E.mode[mode] || 1;
+    let base, parts = [];
+    if (mode === "survival") {
+      const w = Math.min(E.survMaxWins, Math.max(0, wins | 0));
+      base = w * E.survPerWin;
+      parts.push({ k: "surv", n: w, v: base });
+    } else {
+      base = E.stage[stage] || 0;
+      parts.push({ k: "stage", s: stage, v: base });
+    }
+    let coins = base * dm * mm;
+    if (dm !== 1) parts.push({ k: "diff", d: diff, x: dm });
+    if (mm !== 1) parts.push({ k: "mode", m: mode, x: mm });
+    if (mode === "daily" && practice) { coins *= E.practice; parts.push({ k: "practice", x: E.practice }); }
+    if (mode === "daily" && !practice) { coins += E.dailyBonus; parts.push({ k: "daily", v: E.dailyBonus }); }
+    coins = Math.round(coins / 5) * 5;
+    return { coins, parts };
+  };
+
+  /* ---------- Banners ---------- */
+  const NAT_GROUPS = {
+    asia: ["JPN", "CHN", "KOR", "THA", "KSA", "UZB"],
+    latam: ["BRA", "ARG", "URU", "MEX", "COL"],
+    europe: ["GER", "ESP", "FRA", "ITA", "NED", "SWE", "ENG", "POR", "DEN", "NOR", "SCO", "CRO", "SRB"],
+    world: ["SEN", "CMR", "NGA", "GAB", "USA", "JAM"]
+  };
+  const NATIONAL = /^(All Japan|Brazil|Germany|Netherlands|Spain|Sweden|Mexico|Argentina|France|China|Italy|Denmark|Saudi|Thailand|South Korea|England|Uzbekistan|Nigeria|Uruguay|Portugal)\b/;
+  const CLUB_BONDS = ["nankatsu", "toho", "furano", "hirado", "hamburg"];
+  CT.isClubPlayer = function (p) {
+    if (p.dt && p.dt.team && !NATIONAL.test(p.dt.team)) return true;
+    return CT.BONDS.some((b) => CLUB_BONDS.includes(b.id) && b.members.includes(p.names.orig));
+  };
+  const STD = { legend: 3, gold: 12, silver: 35, bronze: 50 };
+  CT.BANNERS = [
+    { id: "general", icon: "⚽", cost: [100, 1000], rates: STD, filter: () => true },
+    { id: "asia", icon: "🌏", cost: [100, 1000], rates: STD, filter: (p) => NAT_GROUPS.asia.includes(p.nat) },
+    { id: "latam", icon: "🌎", cost: [100, 1000], rates: STD, filter: (p) => NAT_GROUPS.latam.includes(p.nat) },
+    { id: "europe", icon: "🌍", cost: [100, 1000], rates: STD, filter: (p) => NAT_GROUPS.europe.includes(p.nat) },
+    { id: "world", icon: "🌐", cost: [80, 800], rates: { legend: 0, gold: 5, silver: 35, bronze: 60 }, filter: (p) => NAT_GROUPS.world.includes(p.nat) },
+    { id: "clubs", icon: "🏟️", cost: [100, 1000], rates: STD, filter: (p) => CT.isClubPlayer(p) },
+    { id: "legends", icon: "👑", cost: [150, 1500], rates: { legend: 20, gold: 80, silver: 0, bronze: 0 }, filter: (p) => p.r >= 88 }
+  ];
+  CT.BANNER_BY_ID = Object.fromEntries(CT.BANNERS.map((b) => [b.id, b]));
+  const TIERS = ["legend", "gold", "silver", "bronze"];
+  const poolCache = {};
+  CT.bannerPool = function (id) {
+    if (poolCache[id]) return poolCache[id];
+    const b = CT.BANNER_BY_ID[id];
+    const by = { legend: [], gold: [], silver: [], bronze: [] };
+    for (const p of CT.PLAYERS) if (b.filter(p)) by[CT.rarity(p.r)].push(p);
+    for (const t of TIERS) by[t].sort((x, y) => y.r - x.r);
+    return (poolCache[id] = by);
+  };
+  // tasas reales del banner: si un nivel no tiene jugadores, su probabilidad pasa al siguiente que sí tenga
+  CT.bannerRates = function (id) {
+    const b = CT.BANNER_BY_ID[id], pool = CT.bannerPool(id);
+    const r = { legend: 0, gold: 0, silver: 0, bronze: 0 };
+    let carry = 0;
+    for (const t of TIERS) {
+      const v = (b.rates[t] || 0) + carry;
+      if (pool[t].length) { r[t] = v; carry = 0; } else carry = v;
+    }
+    if (carry) { for (const t of TIERS.slice().reverse()) if (pool[t].length) { r[t] += carry; break; } }
+    return r;
+  };
+
+  /* ---------- Tirada ----------
+     rng: función 0..1. pity: tiradas seguidas sin leyenda.
+     Garantías: en una x10, al menos un oro o mejor; a las CT.ECON.pity tiradas sin leyenda, leyenda. */
+  CT.gachaRoll = function (rng, bannerId, count, pity = 0) {
+    const pool = CT.bannerPool(bannerId), rates = CT.bannerRates(bannerId);
+    const out = [];
+    let goldPlus = false;
+    for (let i = 0; i < count; i++) {
+      pity++;
+      let tier;
+      if (pity >= CT.ECON.pity && pool.legend.length) tier = "legend";
+      else if (count === 10 && i === 9 && !goldPlus) tier = rng() * (rates.legend + rates.gold) < rates.legend ? "legend" : "gold";
+      else {
+        let x = rng() * 100;
+        tier = "bronze";
+        for (const t of TIERS) { if (x < rates[t]) { tier = t; break; } x -= rates[t]; }
+      }
+      if (!pool[tier].length) tier = TIERS.find((t) => pool[t].length);
+      if (tier === "legend" || tier === "gold") goldPlus = true;
+      if (tier === "legend") pity = 0;
+      const list = pool[tier];
+      out.push({ id: list[Math.floor(rng() * list.length)].id, tier });
+    }
+    return { results: out, pity };
+  };
+
+  /* ---------- Equipo propio ---------- */
+  // team = { name, formation, slots: [id|null...], captainId }
+  CT.teamFromSaved = function (team) {
+    const rows = CT.FORMATIONS[team.formation] || CT.FORMATIONS["4-4-2"];
+    const pos = rows.flat();
+    return pos.map((p, i) => ({ pos: p, player: team.slots && team.slots[i] ? CT.BY_ID[team.slots[i]] || null : null }));
   };
 })(typeof window !== "undefined" ? window : globalThis);
 
@@ -2214,6 +2495,126 @@ button.lb.chem:hover, button.lb.chem:focus-visible { border-color: var(--good); 
       allBondsH: "Todos los vínculos ({n})",
       bondNeed: "{n} de",
       noActive: "Aún no tienes ninguno activo.",
+      pfTitle: "Ficha de jugador",
+      "navGacha": "Gacha",
+      "navTeam": "Mi equipo",
+      "coins": "Monedas",
+      "gTitle": "Gacha",
+      "gPull1": "Tirar x1",
+      "gPull10": "Tirar x10",
+      "gNoCoins": "No tienes monedas suficientes.",
+      "gRates": "Probabilidades",
+      "gPool": "{n} jugadores",
+      "gOwned": "Tienes {n} de {t}",
+      "gPity": "Leyenda asegurada como mucho en {n} tiradas",
+      "gGuarantee": "Cada x10 trae al menos un oro o una leyenda.",
+      "gNew": "NUEVO",
+      "gCloud": "Monedas y colección guardadas en tu cuenta.",
+      "gLocal": "Sin cuenta, las monedas y la colección se guardan solo en este navegador.",
+      "gLoginCta": "Entrar con mi cuenta",
+      "gHowCoins": "Ganas monedas al terminar cada partida: cuanto más lejos llegues y más difícil sea, más. Ganar el Mundial en Profesional da 500.",
+      "gFeatured": "Destacados",
+      "gResult": "Has conseguido",
+      "gToTeam": "Ir a Mi equipo",
+      "gPulling": "Tirando…",
+      "tier.legend": "Leyenda",
+      "tier.gold": "Oro",
+      "tier.silver": "Plata",
+      "tier.bronze": "Bronce",
+      "b.general": "General",
+      "b.general.d": "Todos los jugadores del juego.",
+      "b.asia": "Asiáticos",
+      "b.asia.d": "Japón, China, Corea del Sur, Tailandia, Arabia Saudí y Uzbekistán.",
+      "b.latam": "Latinos",
+      "b.latam.d": "Brasil, Argentina, Uruguay, México y Colombia.",
+      "b.europe": "Europeos",
+      "b.europe.d": "Alemania, España, Francia, Italia, Países Bajos, Suecia, Inglaterra, Portugal, Dinamarca y más.",
+      "b.world": "África y Norteamérica",
+      "b.world.d": "Senegal, Camerún, Nigeria, Gabón, Estados Unidos y Jamaica. Más barato, sin leyendas.",
+      "b.clubs": "Clubes",
+      "b.clubs.d": "Los de clubes de Dream Team (Cataluña, Madrid Blanco, Piemonte, Porto…) y los de Nankatsu, Toho, Furano, Hirado y Hamburgo.",
+      "b.legends": "Leyendas",
+      "b.legends.d": "Solo jugadores de 88 o más. Más caro.",
+      "rwTitle": "Monedas",
+      "rwPending": "Calculando monedas…",
+      "rwGain": "+{n} monedas",
+      "rwBalance": "Ahora tienes {n}",
+      "rwCapped": "Has llegado al límite de 3000 monedas en 24 horas.",
+      "rwErr": "No se pudieron cobrar las monedas: {e}",
+      "rw.stage": "Ronda alcanzada",
+      "rw.surv": "{n} victorias",
+      "rw.diff": "Dificultad ×{x}",
+      "rw.mode": "Modo ×{x}",
+      "rw.practice": "Práctica ×{x}",
+      "rw.daily": "Reto del día +{v}",
+      "rwStage.group": "Fase de grupos",
+      "rwStage.qf": "Cuartos",
+      "rwStage.sf": "Semifinales",
+      "rwStage.final": "Final",
+      "rwStage.champ": "Campeón",
+      "tmTitle": "Mi equipo",
+      "tmIntro": "Monta tu once con los jugadores que consigas en el gacha. Lo usarán los próximos modos de juego.",
+      "tmName": "Nombre del equipo",
+      "tmFormation": "Formación",
+      "tmCaptain": "Capitán",
+      "tmNone": "Sin capitán",
+      "tmSave": "Guardar equipo",
+      "tmSaved": "Equipo guardado",
+      "tmEmpty": "Aún no tienes jugadores. Consigue los primeros en el gacha.",
+      "tmCollection": "Tu colección ({n})",
+      "tmPick": "Elige {pos}",
+      "tmRemove": "Quitar del once",
+      "tmOut": "fuera de posición (−8)",
+      "tmNoneFor": "No tienes jugadores en tu colección.",
+      "tmPickHint": "Pulsa un hueco para elegir jugador.",
+      "tmErr": "No se pudo guardar: {e}",
+      "tmDefaultName": "Mi equipo",
+      "err.not_enough_coins": "No tienes monedas suficientes.",
+      "err.already_claimed": "Esta partida ya se cobró.",
+      "err.too_fast": "Has terminado demasiado rápido: espera un poco entre partidas para cobrar.",
+      "err.not_owned": "Hay jugadores que no están en tu colección.",
+      "err.duplicate": "Hay un jugador repetido.",
+      navAccount: "Cuenta",
+      accTitle: "Tu cuenta",
+      accOff: "Las cuentas no están activadas en esta versión del juego. Tu progreso se guarda en este navegador.",
+      accIntro: "Entra para guardar tus estadísticas, tu álbum y tus logros en la nube y llevarlos a cualquier dispositivo.",
+      accEmail: "Tu email",
+      accSend: "Enviarme el enlace",
+      accSent: "Te hemos mandado un enlace a {e}. Ábrelo en este dispositivo para entrar.",
+      accOr: "o entra con",
+      accLocalNote: "Lo que ya has jugado en este navegador se suma a tu cuenta al entrar.",
+      accHello: "Hola, {n}",
+      accNoName: "Elige tu nombre de jugador",
+      accUser: "Nombre de jugador",
+      accUserHint: "De 3 a 20 caracteres. Es el que sale en la clasificación.",
+      accUserSave: "Guardar nombre",
+      accUserOk: "Nombre guardado",
+      accUserTaken: "Ese nombre ya está cogido.",
+      accUserBad: "Usa entre 3 y 20 letras, números, espacios, puntos, guiones o guiones bajos.",
+      accSyncing: "Sincronizando…",
+      accSynced: "Progreso guardado en tu cuenta",
+      accSyncErr: "No se pudo sincronizar: {e}",
+      accLoading: "Conectando…",
+      accLogout: "Cerrar sesión",
+      accStats: "Tus estadísticas",
+      accBoard: "Clasificación",
+      accBoardEmpty: "Todavía no hay nadie en la clasificación.",
+      accBoardCols: "Jugador|Títulos|Supervivencia|Victorias|Álbum",
+      accSignedAs: "Sesión iniciada como {e}",
+      pfTeam: "En Dream Team",
+      pfTech: "Técnicas",
+      pfNoTech: "Sin técnicas especiales: juega con su media.",
+      pfBonds: "Vínculos",
+      pfNoBonds: "No forma parte de ningún vínculo.",
+      pfYou: "Contigo",
+      pfGoals: "Goles en tus partidas",
+      pfAlbum: "En tu álbum",
+      pfNotAlbum: "Aún no lo has fichado",
+      pfAir: "aéreo",
+      pfPow: "Potencia",
+      pfInfo: "Ver ficha",
+      pfNeed: "Se activa con {n}",
+      "tt.shot": "Tiro", "tt.drib": "Regate", "tt.pass": "Pase", "tt.def": "Defensa", "tt.save": "Parada", "tt.combo": "Combinada",
       penShootout: "Tanda de penaltis",
       wins: "Victorias",
       streak: "Racha",
@@ -2409,6 +2810,126 @@ button.lb.chem:hover, button.lb.chem:focus-visible { border-color: var(--good); 
       allBondsH: "すべてのコンビ（{n}）",
       bondNeed: "{n}人／",
       noActive: "まだ発動中のコンビはない。",
+      pfTitle: "選手データ",
+      "navGacha": "ガチャ",
+      "navTeam": "マイチーム",
+      "coins": "コイン",
+      "gTitle": "ガチャ",
+      "gPull1": "1回引く",
+      "gPull10": "10連",
+      "gNoCoins": "コインが足りない。",
+      "gRates": "排出率",
+      "gPool": "{n}人",
+      "gOwned": "所持 {n}/{t}",
+      "gPity": "あと{n}回以内にレジェンド確定",
+      "gGuarantee": "10連ではゴールド以上が1枚以上確定。",
+      "gNew": "NEW",
+      "gCloud": "コインとコレクションはアカウントに保存される。",
+      "gLocal": "アカウントなしでは、コインとコレクションはこのブラウザにだけ保存される。",
+      "gLoginCta": "ログインする",
+      "gHowCoins": "試合を終えるとコインがもらえる。勝ち進むほど、難易度が高いほど多い。プロでワールドカップ優勝なら500。",
+      "gFeatured": "注目選手",
+      "gResult": "獲得した選手",
+      "gToTeam": "マイチームへ",
+      "gPulling": "抽選中…",
+      "tier.legend": "レジェンド",
+      "tier.gold": "ゴールド",
+      "tier.silver": "シルバー",
+      "tier.bronze": "ブロンズ",
+      "b.general": "ノーマル",
+      "b.general.d": "ゲームの全選手。",
+      "b.asia": "アジア",
+      "b.asia.d": "日本、中国、韓国、タイ、サウジアラビア、ウズベキスタン。",
+      "b.latam": "ラテン",
+      "b.latam.d": "ブラジル、アルゼンチン、ウルグアイ、メキシコ、コロンビア。",
+      "b.europe": "ヨーロッパ",
+      "b.europe.d": "ドイツ、スペイン、フランス、イタリア、オランダ、スウェーデン、イングランド、ポルトガル、デンマークなど。",
+      "b.world": "アフリカ・北米",
+      "b.world.d": "セネガル、カメルーン、ナイジェリア、ガボン、アメリカ、ジャマイカ。安いがレジェンドなし。",
+      "b.clubs": "クラブ",
+      "b.clubs.d": "ドリームチームのクラブ所属選手（カタルーニャ、マドリッド・ブランコ、ピエモンテ、ポルト…）と南葛・東邦・ふらの・比良戸・ハンブルクの選手。",
+      "b.legends": "レジェンド",
+      "b.legends.d": "能力88以上の選手だけ。少し高い。",
+      "rwTitle": "コイン",
+      "rwPending": "コインを計算中…",
+      "rwGain": "+{n}コイン",
+      "rwBalance": "所持 {n}",
+      "rwCapped": "24時間で獲得できる上限3000コインに達した。",
+      "rwErr": "コインを受け取れなかった：{e}",
+      "rw.stage": "到達ラウンド",
+      "rw.surv": "{n}勝",
+      "rw.diff": "難易度 ×{x}",
+      "rw.mode": "モード ×{x}",
+      "rw.practice": "練習 ×{x}",
+      "rw.daily": "デイリー +{v}",
+      "rwStage.group": "グループリーグ",
+      "rwStage.qf": "準々決勝",
+      "rwStage.sf": "準決勝",
+      "rwStage.final": "決勝",
+      "rwStage.champ": "優勝",
+      "tmTitle": "マイチーム",
+      "tmIntro": "ガチャで手に入れた選手でイレブンを組もう。今後のゲームモードで使う。",
+      "tmName": "チーム名",
+      "tmFormation": "フォーメーション",
+      "tmCaptain": "キャプテン",
+      "tmNone": "キャプテンなし",
+      "tmSave": "チームを保存",
+      "tmSaved": "チームを保存した",
+      "tmEmpty": "まだ選手がいない。ガチャで最初の選手を手に入れよう。",
+      "tmCollection": "コレクション（{n}）",
+      "tmPick": "{pos}を選ぶ",
+      "tmRemove": "外す",
+      "tmOut": "ポジション外（−8）",
+      "tmNoneFor": "コレクションに選手がいない。",
+      "tmPickHint": "枠を押して選手を選ぼう。",
+      "tmErr": "保存できなかった：{e}",
+      "tmDefaultName": "マイチーム",
+      "err.not_enough_coins": "コインが足りない。",
+      "err.already_claimed": "この試合のコインは受け取り済み。",
+      "err.too_fast": "終わるのが早すぎる。少し時間をおいてから受け取ろう。",
+      "err.not_owned": "コレクションにいない選手がいる。",
+      "err.duplicate": "同じ選手が2回入っている。",
+      navAccount: "アカウント",
+      accTitle: "あなたのアカウント",
+      accOff: "このバージョンではアカウント機能は使えない。進行状況はこのブラウザに保存される。",
+      accIntro: "ログインすると記録・アルバム・実績がクラウドに保存され、どの端末でも続きから遊べる。",
+      accEmail: "メールアドレス",
+      accSend: "ログインリンクを送る",
+      accSent: "{e} にリンクを送った。この端末で開いてログインしよう。",
+      accOr: "または",
+      accLocalNote: "このブラウザで遊んだ記録はログイン時にアカウントへ合算される。",
+      accHello: "ようこそ、{n}",
+      accNoName: "プレイヤー名を決めよう",
+      accUser: "プレイヤー名",
+      accUserHint: "3〜20文字。ランキングに表示される。",
+      accUserSave: "名前を保存",
+      accUserOk: "名前を保存した",
+      accUserTaken: "その名前はもう使われている。",
+      accUserBad: "3〜20文字の文字・数字・スペース・ピリオド・ハイフン・アンダーバーで入力しよう。",
+      accSyncing: "同期中…",
+      accSynced: "アカウントに保存済み",
+      accSyncErr: "同期できなかった：{e}",
+      accLoading: "接続中…",
+      accLogout: "ログアウト",
+      accStats: "あなたの記録",
+      accBoard: "ランキング",
+      accBoardEmpty: "まだランキングに誰もいない。",
+      accBoardCols: "プレイヤー|優勝|サバイバル|勝利|アルバム",
+      accSignedAs: "{e} でログイン中",
+      pfTeam: "ドリームチームでの所属",
+      pfTech: "必殺技",
+      pfNoTech: "特別な技はない。能力値で勝負する。",
+      pfBonds: "コンビ",
+      pfNoBonds: "コンビには入っていない。",
+      pfYou: "あなたとの記録",
+      pfGoals: "あなたのチームでのゴール",
+      pfAlbum: "アルバム登録済み",
+      pfNotAlbum: "まだ獲得していない",
+      pfAir: "空中",
+      pfPow: "威力",
+      pfInfo: "データを見る",
+      pfNeed: "{n}人で発動",
+      "tt.shot": "シュート", "tt.drib": "ドリブル", "tt.pass": "パス", "tt.def": "ディフェンス", "tt.save": "セーブ", "tt.combo": "合体技",
       penShootout: "PK戦",
       wins: "勝利",
       streak: "連勝",
@@ -2604,6 +3125,126 @@ button.lb.chem:hover, button.lb.chem:focus-visible { border-color: var(--good); 
       allBondsH: "All duos ({n})",
       bondNeed: "{n} of",
       noActive: "None active yet.",
+      pfTitle: "Player card",
+      "navGacha": "Gacha",
+      "navTeam": "My team",
+      "coins": "Coins",
+      "gTitle": "Gacha",
+      "gPull1": "Pull x1",
+      "gPull10": "Pull x10",
+      "gNoCoins": "Not enough coins.",
+      "gRates": "Rates",
+      "gPool": "{n} players",
+      "gOwned": "You have {n} of {t}",
+      "gPity": "Legend guaranteed within {n} pulls",
+      "gGuarantee": "Every x10 includes at least one gold or legend.",
+      "gNew": "NEW",
+      "gCloud": "Coins and collection saved to your account.",
+      "gLocal": "Without an account, coins and collection are only saved in this browser.",
+      "gLoginCta": "Sign in",
+      "gHowCoins": "You earn coins at the end of every run: the further you go and the harder it is, the more. Winning the World Cup on Pro pays 500.",
+      "gFeatured": "Featured",
+      "gResult": "You got",
+      "gToTeam": "Go to My team",
+      "gPulling": "Pulling…",
+      "tier.legend": "Legend",
+      "tier.gold": "Gold",
+      "tier.silver": "Silver",
+      "tier.bronze": "Bronze",
+      "b.general": "General",
+      "b.general.d": "Every player in the game.",
+      "b.asia": "Asia",
+      "b.asia.d": "Japan, China, South Korea, Thailand, Saudi Arabia and Uzbekistan.",
+      "b.latam": "Latin America",
+      "b.latam.d": "Brazil, Argentina, Uruguay, Mexico and Colombia.",
+      "b.europe": "Europe",
+      "b.europe.d": "Germany, Spain, France, Italy, Netherlands, Sweden, England, Portugal, Denmark and more.",
+      "b.world": "Africa & North America",
+      "b.world.d": "Senegal, Cameroon, Nigeria, Gabon, United States and Jamaica. Cheaper, no legends.",
+      "b.clubs": "Clubs",
+      "b.clubs.d": "Dream Team club players (Catalonia, Madrid Blanco, Piemonte, Porto…) plus Nankatsu, Toho, Furano, Hirado and Hamburg.",
+      "b.legends": "Legends",
+      "b.legends.d": "Only players rated 88 or more. More expensive.",
+      "rwTitle": "Coins",
+      "rwPending": "Counting coins…",
+      "rwGain": "+{n} coins",
+      "rwBalance": "You now have {n}",
+      "rwCapped": "You reached the limit of 3000 coins per 24 hours.",
+      "rwErr": "Could not claim the coins: {e}",
+      "rw.stage": "Round reached",
+      "rw.surv": "{n} wins",
+      "rw.diff": "Difficulty ×{x}",
+      "rw.mode": "Mode ×{x}",
+      "rw.practice": "Practice ×{x}",
+      "rw.daily": "Daily challenge +{v}",
+      "rwStage.group": "Group stage",
+      "rwStage.qf": "Quarter-finals",
+      "rwStage.sf": "Semi-finals",
+      "rwStage.final": "Final",
+      "rwStage.champ": "Champion",
+      "tmTitle": "My team",
+      "tmIntro": "Build your eleven with the players you get from the gacha. Future game modes will use it.",
+      "tmName": "Team name",
+      "tmFormation": "Formation",
+      "tmCaptain": "Captain",
+      "tmNone": "No captain",
+      "tmSave": "Save team",
+      "tmSaved": "Team saved",
+      "tmEmpty": "You have no players yet. Get your first ones in the gacha.",
+      "tmCollection": "Your collection ({n})",
+      "tmPick": "Pick a {pos}",
+      "tmRemove": "Remove from the eleven",
+      "tmOut": "out of position (−8)",
+      "tmNoneFor": "You have no players in your collection.",
+      "tmPickHint": "Tap a slot to pick a player.",
+      "tmErr": "Could not save: {e}",
+      "tmDefaultName": "My team",
+      "err.not_enough_coins": "Not enough coins.",
+      "err.already_claimed": "This run was already claimed.",
+      "err.too_fast": "That was too quick: wait a little between runs to claim.",
+      "err.not_owned": "Some players are not in your collection.",
+      "err.duplicate": "A player appears twice.",
+      navAccount: "Account",
+      accTitle: "Your account",
+      accOff: "Accounts are not enabled in this version of the game. Your progress is saved in this browser.",
+      accIntro: "Sign in to keep your stats, album and achievements in the cloud and take them to any device.",
+      accEmail: "Your email",
+      accSend: "Email me a link",
+      accSent: "We sent a link to {e}. Open it on this device to sign in.",
+      accOr: "or sign in with",
+      accLocalNote: "Whatever you already played in this browser is added to your account when you sign in.",
+      accHello: "Hi, {n}",
+      accNoName: "Pick your player name",
+      accUser: "Player name",
+      accUserHint: "3 to 20 characters. It is the one shown on the leaderboard.",
+      accUserSave: "Save name",
+      accUserOk: "Name saved",
+      accUserTaken: "That name is already taken.",
+      accUserBad: "Use 3 to 20 letters, numbers, spaces, dots, hyphens or underscores.",
+      accSyncing: "Syncing…",
+      accSynced: "Progress saved to your account",
+      accSyncErr: "Could not sync: {e}",
+      accLoading: "Connecting…",
+      accLogout: "Sign out",
+      accStats: "Your stats",
+      accBoard: "Leaderboard",
+      accBoardEmpty: "Nobody on the leaderboard yet.",
+      accBoardCols: "Player|Titles|Survival|Wins|Album",
+      accSignedAs: "Signed in as {e}",
+      pfTeam: "In Dream Team",
+      pfTech: "Techniques",
+      pfNoTech: "No special techniques: plays on his rating.",
+      pfBonds: "Duos",
+      pfNoBonds: "Not part of any duo.",
+      pfYou: "With you",
+      pfGoals: "Goals in your runs",
+      pfAlbum: "In your album",
+      pfNotAlbum: "Not signed yet",
+      pfAir: "aerial",
+      pfPow: "Power",
+      pfInfo: "View card",
+      pfNeed: "Activates with {n}",
+      "tt.shot": "Shot", "tt.drib": "Dribble", "tt.pass": "Pass", "tt.def": "Defence", "tt.save": "Save", "tt.combo": "Combo",
       penShootout: "Penalty shoot-out",
       wins: "Wins",
       streak: "Streak",
@@ -2832,13 +3473,15 @@ button.lb.chem:hover, button.lb.chem:focus-visible { border-color: var(--good); 
     CT.daily = CT.store.get("daily", {});
     CT.history = CT.store.get("history", []);
   };
-  CT.saveProfile = function () {
+  CT.saveProfile = function (opts) {
     CT.store.set("settings", CT.settings);
     CT.store.set("stats", CT.stats);
     CT.store.set("album", [...CT.album]);
     CT.store.set("ach", [...CT.ach]);
     CT.store.set("daily", CT.daily);
     CT.store.set("history", CT.history.slice(0, 20));
+    // con sesión iniciada, el progreso también se sube a la cuenta
+    if (!(opts && opts.local) && CT.cloud && CT.cloud.user) CT.cloud.schedulePush();
   };
 
   /* ---------- Sonido (síntesis WebAudio, sin archivos) ---------- */
@@ -2924,7 +3567,10 @@ button.lb.chem:hover, button.lb.chem:focus-visible { border-color: var(--good); 
       const sub = CT.settings.lang === "ja" ? t.en : (t.ja || t.en);
       const pose = kind === "save" ? "kick" : kind === "def" ? "run1" : "kick";
       const crew = [player].concat(partners || []).filter(Boolean).slice(0, 3);
-      const sprites = crew.map((p, i) => '<img class="cutin-sprite s' + i + '" src="' + CT.spriteURL(p, i ? "run2" : pose, 9) + '" alt="">').join("");
+      // con retrato propio se usa la foto; si no, el sprite de cuerpo entero en plena acción
+      const sprites = crew.map((p, i) => CT.photoURL(p)
+        ? '<img class="cutin-photo s' + i + '" src="' + CT.photoURL(p) + '" alt="" onerror="this.remove()">'
+        : '<img class="cutin-sprite s' + i + '" src="' + CT.spriteURL(p, i ? "run2" : pose, 9) + '" alt="">').join("");
       const who = crew.map((p) => CT.esc(CT.pname(p))).join(CT.settings.lang === "ja" ? "・" : " + ");
       el.innerHTML =
         '<div class="cutin-lines"></div>' +
@@ -3130,6 +3776,137 @@ button.lb.chem:hover, button.lb.chem:focus-visible { border-color: var(--good); 
     g.fillRect(2 * scale, 14 * scale, 8 * scale, scale);
     CT.drawSprite(g, c.width / 2, 14 * scale, CT.spriteLook(p, p.nat, p.pos === "GK"), pose, scale);
     return (cache[key] = c.toDataURL());
+  };
+
+  /* ==========================================================================
+     Retrato pixel art (busto 24x24) para cartas y álbum. Genérico: el peinado,
+     la piel y el dorsal salen del hash del id; la camiseta, de la selección.
+     ========================================================================== */
+  const FACE = [
+    "........................",
+    "........................",
+    "........................",
+    "........................",
+    "........SSSSSSS.........",
+    ".......SSSSSSSSSs.......",
+    "......SSSSSSSSSSSs......",
+    "......SSSSSSSSSSSs......",
+    "......SSSSSSSSSSSs......",
+    "......SBBBSSSSBBBs......",
+    ".....sSWEESSSSWEESs.....",
+    ".....sSSSSSSSSSSSSs.....",
+    "......SSSSSSsSSSSs......",
+    "......SSSSSSSSSSSs......",
+    ".......SSSSMMSSSs.......",
+    "........SSSSSSSs........",
+    ".........sSSSSs.........",
+    "..........sSSs..........",
+    "......JJJJsSSsJJJJ......",
+    "....JJJJJJKssKJJJJJJ....",
+    "...JJJJJJJJKKJJJJJJJj...",
+    "..JJJJJJJJJJJJJJJJJJjj..",
+    "..KJJJJJJJJJJJJJJJJJjK..",
+    "..JJJJJJJJJJJJJJJJJJjj.."
+  ];
+  // peinados (solo filas 0-15; "." deja ver la cara)
+  const HAIRS = [
+    [ // corto
+      "........................", "........................", "........HHHHHHH.........", "......HHHHHHHHHHH.......",
+      ".....HHHhhHHHHHHHH......", ".....HHHHHHHHHHHHHH.....", ".....HHH.HHHH.HHHHH.....", ".....HH..........HH.....",
+      ".....H............H....."],
+    [ // de punta
+      "........H...H..H........", ".......HH..HH.HH...H....", "......HHHHHHHHHHHHH.....", ".....HHHHHHHHHHHHHH.....",
+      "....HHHhhHHHHHHHHHH.....", "....HHHHHHHHHHHHHHHH....", ".....HHHHH.HHHH.HHHH....", ".....HH...........HH....",
+      ".....H............H....."],
+    [ // melena
+      "........................", "........................", "........HHHHHHH.........", "......HHHHHHHHHHH.......",
+      ".....HHhhHHHHHHHHH......", "....HHHHHHHHHHHHHHH.....", "....HHHHHHHHHHHHHHH.....", "....HHH..........HHH....",
+      "....HH............HH....", "....HH............HH....", "....HH............HH....", "....HH............HH....",
+      "....HH............HH....", "....H..............H...."],
+    [ // tazón
+      "........................", "........................", "........................", "......HHHHHHHHHHH.......",
+      ".....HHhhHHHHHHHHH......", ".....HHHHHHHHHHHHHH.....", ".....HHHHHHHHHHHHHH.....", ".....HHHHHHHHHHHHHH.....",
+      ".....HH...........H....."],
+    [ // rapado
+      "........................", "........................", "........................", "........................",
+      ".......HHHHHHHHH........", "......HHHHHHHHHHH.......", "......H.........H......."],
+    [ // rizado
+      ".......HHHHHHHHH........", ".....HHHHHHHHHHHHH......", "....HHHHhHHHHHHHHHH.....", "...HHHHHhhHHHHHHHHHH....",
+      "...HHHHHHHHHHHHHHHHH....", "...HHHHHHHHHHHHHHHHH....", "...HHH.HHHHHHHHH.HHH....", "...HH.............HH....",
+      "....H.............H....."],
+    [ // con cinta
+      "........................", "........................", "........HHHHHHH.........", "......HHHHHHHHHHH.......",
+      ".....HHHhhHHHHHHHH......", ".....RRRRRRRRRRRRRR.....", ".....HHH.HHHHH.HHHH.....", ".....HH..........HH.....",
+      ".....H............H....."],
+    [ // raya al lado
+      "........................", "........................", ".......HHHHHHHH.........", ".....HHHHHHHHHHHH.......",
+      ".....HHHHHHHHhhHHH......", ".....HHHHHHHHHHHHHH.....", ".....HHHHHHH...HHHH.....", ".....HHHH........HH.....",
+      ".....HH...........H....."]
+  ];
+  const DIG = { // 3x5
+    0: ["111", "101", "101", "101", "111"], 1: ["010", "110", "010", "010", "111"], 2: ["111", "001", "111", "100", "111"],
+    3: ["111", "001", "011", "001", "111"], 4: ["101", "101", "111", "001", "001"], 5: ["111", "100", "111", "001", "111"],
+    6: ["111", "100", "111", "101", "111"], 7: ["111", "001", "010", "010", "010"], 8: ["111", "101", "111", "101", "111"],
+    9: ["111", "101", "111", "001", "111"]
+  };
+  function shade(hex, f) {
+    const n = parseInt(hex.slice(1), 16), r = n >> 16, g = (n >> 8) & 255, b = n & 255;
+    const m = (c) => Math.max(0, Math.min(255, Math.round(f < 0 ? c * (1 + f) : c + (255 - c) * f)));
+    return "#" + ((1 << 24) | (m(r) << 16) | (m(g) << 8) | m(b)).toString(16).slice(1);
+  }
+  CT.drawBust = function (g, p, s) {
+    const isGK = p.pos === "GK";
+    const look = CT.spriteLook(p, p.nat, isGK);
+    const h = CT.hashStr(p.id + "#bust");
+    const hair = HAIRS[h % HAIRS.length];
+    const col = {
+      S: look.skin, s: shade(look.skin, -0.16), B: look.hair, W: "#ffffff", E: "#16161c", M: shade(look.skin, -0.3),
+      J: look.shirt, j: shade(look.shirt, -0.22), K: look.trim, H: look.hair, h: shade(look.hair, 0.28), R: look.trim
+    };
+    const px = (x, y, c) => { g.fillStyle = c; g.fillRect(x * s, y * s, s, s); };
+    FACE.forEach((row, y) => { for (let x = 0; x < 24; x++) { const ch = row[x]; if (ch !== "." && col[ch]) px(x, y, col[ch]); } });
+    hair.forEach((row, y) => { for (let x = 0; x < 24; x++) { const ch = row[x]; if (ch !== "." && col[ch]) px(x, y, col[ch]); } });
+    // dorsal en el pecho (genérico)
+    const num = String(isGK ? 1 + (h % 2) * 11 : 2 + (h % 20));
+    const dc = look.trim === look.shirt ? "#ffffff" : look.trim;
+    let x0 = 14 - (num.length - 1) * 2;
+    for (const d of num) { DIG[d].forEach((r, yy) => { for (let xx = 0; xx < 3; xx++) if (r[xx] === "1") px(x0 + xx, 19 + yy, dc); }); x0 += 4; }
+    // guantes del portero asomando
+    if (isGK) { px(2, 21, "#f4f4f4"); px(3, 21, "#f4f4f4"); px(20, 21, "#f4f4f4"); px(21, 21, "#f4f4f4"); }
+  };
+  const bustCache = {};
+  CT.bustURL = function (p, scale = 4) {
+    if (typeof document === "undefined") return "";
+    const key = p.id + "@" + scale;
+    if (bustCache[key]) return bustCache[key];
+    const c = document.createElement("canvas");
+    c.width = 24 * scale; c.height = 24 * scale;
+    CT.drawBust(c.getContext("2d"), p, scale);
+    return (bustCache[key] = c.toDataURL());
+  };
+
+  /* ---------- Retratos propios (opcionales) ----------
+     Si existe img/players/index.json, el juego usa esas imágenes en vez del busto pixel art.
+     index.json = { "JPN-tsubasa-ozora": "JPN-tsubasa-ozora.webp", ... } (lo genera tools/portraits-index.mjs) */
+  CT.photos = {};
+  CT.PHOTO_BASE = "img/players/";
+  CT.loadPhotos = async function () {
+    // solo con la web servida por http(s): abriendo el archivo a mano el navegador bloquea la petición
+    if (typeof fetch === "undefined" || root.CT_ARTIFACT || !/^https?:/.test(root.location ? root.location.protocol : "")) return false;
+    try {
+      const r = await fetch(CT.PHOTO_BASE + "index.json", { cache: "no-cache" });
+      if (!r.ok) return false;
+      const j = await r.json();
+      CT.photos = Array.isArray(j) ? Object.fromEntries(j.map((f) => [f.replace(/\.[a-z0-9]+$/i, ""), f])) : j;
+      return Object.keys(CT.photos).length > 0;
+    } catch (e) { return false; }
+  };
+  CT.photoURL = function (p) { const f = CT.photos[p.id]; return f ? CT.PHOTO_BASE + encodeURIComponent(f) : null; };
+  // <img> con la foto si la hay; si no (o si falla al cargar), el busto pixel art
+  CT.faceHTML = function (p, cls, scale = 4) {
+    const bust = CT.bustURL(p, scale), photo = CT.photoURL(p);
+    if (!photo) return `<img class="${cls} bust" src="${bust}" alt="" aria-hidden="true">`;
+    return `<img class="${cls} photo" src="${photo}" data-fb="${bust}" alt="" aria-hidden="true" loading="lazy" onerror="this.onerror=null;this.classList.remove('photo');this.classList.add('bust');this.src=this.dataset.fb">`;
   };
 })(typeof window !== "undefined" ? window : globalThis);
 
@@ -3567,6 +4344,267 @@ button.lb.chem:hover, button.lb.chem:focus-visible { border-color: var(--good); 
   };
 })(typeof window !== "undefined" ? window : globalThis);
 
+/* ---- 06d-cloud.js ---- */
+/* ==========================================================================
+   Cuentas en la nube (Supabase): login con email o Google/Discord y
+   sincronización del progreso (estadísticas, álbum, logros, historial).
+   Es opcional: sin config.js con las claves de Supabase, todo sigue
+   guardándose solo en el navegador como siempre.
+   ========================================================================== */
+(function (root) {
+  const CT = root.CT;
+  const SUPABASE_JS = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js";
+  const C = (CT.cloud = { enabled: false, user: null, profile: null, status: "off", error: null, client: null, listeners: [] });
+
+  const cfg = () => root.CT_CONFIG || {};
+  C.on = (fn) => C.listeners.push(fn);
+  const emit = () => C.listeners.forEach((fn) => { try { fn(C); } catch (e) { /* nada */ } });
+  const setStatus = (st, err) => { C.status = st; C.error = err || null; emit(); };
+
+  function loadScript(src) {
+    return new Promise((ok, ko) => {
+      if (root.supabase && root.supabase.createClient) return ok();
+      const s = document.createElement("script");
+      s.src = src; s.async = true; s.onload = () => ok(); s.onerror = () => ko(new Error("No se pudo cargar Supabase"));
+      document.head.appendChild(s);
+    });
+  }
+
+  /* ---------- Fusión del progreso local con el de la cuenta ---------- */
+  CT.profileSnapshot = function () {
+    return { v: 1, stats: CT.stats, album: [...CT.album], ach: [...CT.ach], daily: CT.daily, history: CT.history.slice(0, 20) };
+  };
+  CT.mergeProfile = function (a, b) {
+    // a = local, b = nube. Contadores: el mayor de los dos; colecciones: la unión.
+    const out = { v: 1 };
+    const sa = (a && a.stats) || {}, sb = (b && b.stats) || {};
+    const st = CT.defaultStats();
+    for (const k of Object.keys(st)) {
+      if (k === "scorers") continue;
+      st[k] = Math.max(+sa[k] || 0, +sb[k] || 0);
+    }
+    const sc = Object.assign({}, sa.scorers || {});
+    for (const [id, n] of Object.entries(sb.scorers || {})) sc[id] = Math.max(sc[id] || 0, n);
+    st.scorers = sc;
+    out.stats = st;
+    out.album = [...new Set([...((a && a.album) || []), ...((b && b.album) || [])])].filter((id) => CT.BY_ID[id]);
+    out.ach = [...new Set([...((a && a.ach) || []), ...((b && b.ach) || [])])];
+    out.daily = Object.assign({}, (b && b.daily) || {}, (a && a.daily) || {});
+    const seen = new Set(), hist = [];
+    for (const h of [...((a && a.history) || []), ...((b && b.history) || [])]) {
+      const k = [h.date, h.name, h.mode, h.res].join("|");
+      if (!seen.has(k)) { seen.add(k); hist.push(h); }
+    }
+    out.history = hist.slice(0, 20);
+    return out;
+  };
+  function applyProfile(p) {
+    CT.stats = Object.assign(CT.defaultStats(), p.stats);
+    CT.album = new Set(p.album);
+    CT.ach = new Set(p.ach);
+    CT.daily = p.daily;
+    CT.history = p.history;
+    CT.saveProfile({ local: true });
+  }
+  const summary = () => ({
+    titles: CT.stats.titles || 0, best_surv: CT.stats.bestSurv || 0, matches: CT.stats.matches || 0,
+    wins: CT.stats.w || 0, album_count: CT.album.size, ach_count: CT.ach.size
+  });
+
+  /* ---------- Arranque ---------- */
+  C.init = async function () {
+    const c = cfg();
+    if (root.CT_ARTIFACT || !c.supabaseUrl || !c.supabaseAnonKey || typeof document === "undefined") return false;
+    C.enabled = true; setStatus("loading");
+    try {
+      await loadScript(c.supabaseJs || SUPABASE_JS);
+      C.client = root.supabase.createClient(c.supabaseUrl, c.supabaseAnonKey, {
+        auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: "pkce" }
+      });
+      C.client.auth.onAuthStateChange((ev, session) => {
+        const u = session ? session.user : null;
+        if ((u && C.user && u.id === C.user.id) || (!u && !C.user)) return;
+        setUser(u);
+      });
+      const { data } = await C.client.auth.getSession();
+      await setUser(data && data.session ? data.session.user : null);
+      return true;
+    } catch (e) {
+      setStatus("error", e.message);
+      return false;
+    }
+  };
+
+  async function setUser(u) {
+    C.user = u || null;
+    C.profile = null;
+    if (!u) { setStatus("out"); return; }
+    setStatus("syncing");
+    try {
+      let { data, error } = await C.client.from("profiles").select("*").eq("id", u.id).maybeSingle();
+      if (error) throw error;
+      if (!data) {
+        const ins = await C.client.from("profiles").insert({ id: u.id }).select("*").single();
+        if (ins.error) throw ins.error;
+        data = ins.data;
+      }
+      C.profile = data;
+      applyProfile(CT.mergeProfile(CT.profileSnapshot(), data.data || {}));
+      // limpia el ?code= de la URL tras volver del login
+      try { if (/[?&](code|error)=/.test(location.search)) history.replaceState(null, "", location.pathname + location.hash); } catch (e) {}
+      await C.push();
+    } catch (e) {
+      setStatus("error", e.message || String(e));
+    }
+  }
+
+  /* ---------- Subida (con espera para agrupar cambios) ---------- */
+  let timer = null;
+  C.schedulePush = function () {
+    if (!C.user) return;
+    clearTimeout(timer);
+    timer = setTimeout(() => C.push(), 1500);
+  };
+  C.push = async function () {
+    if (!C.user || !C.client) return;
+    setStatus("syncing");
+    // monedas, colección y equipo no se envían: solo cambian en el servidor (gacha_pull, claim_reward, save_team)
+    const row = Object.assign({ data: CT.profileSnapshot(), updated_at: new Date().toISOString() }, summary());
+    const { data, error } = await C.client.from("profiles").update(row).eq("id", C.user.id).select("*").single();
+    if (error) { setStatus("error", error.message); return; }
+    C.profile = data;
+    setStatus("in");
+  };
+
+  /* ---------- Acciones ---------- */
+  const redirect = () => location.origin + location.pathname;
+  C.signInEmail = async function (email) {
+    const { error } = await C.client.auth.signInWithOtp({ email, options: { emailRedirectTo: redirect() } });
+    if (error) throw error;
+  };
+  C.signInOAuth = async function (provider) {
+    const { error } = await C.client.auth.signInWithOAuth({ provider, options: { redirectTo: redirect() } });
+    if (error) throw error;
+  };
+  C.signOut = async function () {
+    await C.push().catch(() => {});
+    await C.client.auth.signOut();
+  };
+  // devuelve null si ha ido bien o el código del problema: "bad" | "taken" | mensaje
+  C.setUsername = async function (name) {
+    const n = String(name || "").trim();
+    if (!/^[\p{L}\p{N}_.\- ]{3,20}$/u.test(n)) return "bad";
+    const { data, error } = await C.client.from("profiles").update({ username: n }).eq("id", C.user.id).select("*").single();
+    if (error) return error.code === "23505" ? "taken" : error.message;
+    C.profile = data; emit();
+    return null;
+  };
+  C.leaderboard = async function () {
+    const { data, error } = await C.client.rpc("leaderboard_top");
+    if (error) throw error;
+    return (data || []).slice(0, 20);
+  };
+  C.providers = () => (Array.isArray(cfg().oauth) ? cfg().oauth : []);
+})(typeof window !== "undefined" ? window : globalThis);
+
+/* ---- 06e-wallet.js ---- */
+/* ==========================================================================
+   Monedero: monedas, colección del gacha y equipo propio.
+   - Con sesión iniciada: todo vive en Supabase y se cambia con funciones del
+     servidor (no se puede trucar editando el navegador).
+   - Sin cuenta: se guarda en este navegador.
+   ========================================================================== */
+(function (root) {
+  const CT = root.CT;
+  const W = (CT.wallet = {});
+  const C = () => CT.cloud;
+
+  function local() {
+    const w = CT.store.get("wallet", null) || { coins: CT.ECON.welcome, collection: {}, pity: 0, pulls: 0, team: null, claimed: [] };
+    w.collection = w.collection || {}; w.claimed = w.claimed || [];
+    return w;
+  }
+  const saveLocal = (w) => CT.store.set("wallet", w);
+  W.isCloud = () => !!(C() && C().user && C().profile);
+
+  // estado actual: { coins, collection, pity, pulls, team, cloud }
+  W.state = function () {
+    if (W.isCloud()) {
+      const p = C().profile;
+      return { coins: p.coins | 0, collection: p.collection || {}, pity: p.pity | 0, pulls: p.pulls | 0, team: p.team || null, cloud: true };
+    }
+    const w = local();
+    return { coins: w.coins, collection: w.collection, pity: w.pity, pulls: w.pulls, team: w.team, cloud: false };
+  };
+  W.owned = (id) => (W.state().collection[id] || 0);
+
+  const errMsg = (e) => (e && (e.message || e.details || e.hint)) || String(e);
+  // los errores del servidor llegan como mensaje; nos quedamos con el código
+  const code = (e) => { const m = errMsg(e); const k = ["not_enough_coins", "already_claimed", "too_fast", "not_owned", "duplicate", "bad_team", "bad_banner"].find((c) => m.includes(c)); return k || m; };
+
+  /* ---------- Tirar ---------- */
+  W.pull = async function (bannerId, count) {
+    const b = CT.BANNER_BY_ID[bannerId];
+    if (!b || (count !== 1 && count !== 10)) throw new Error("bad_banner");
+    const cost = count === 10 ? b.cost[1] : b.cost[0];
+    let results, coins;
+    if (W.isCloud()) {
+      const { data, error } = await C().client.rpc("gacha_pull", { p_banner: bannerId, p_count: count });
+      if (error) throw new Error(code(error));
+      results = data.results; coins = data.coins;
+      Object.assign(C().profile, { coins: data.coins, pity: data.pity, collection: data.collection, pulls: (C().profile.pulls | 0) + count });
+    } else {
+      const w = local();
+      if (w.coins < cost) throw new Error("not_enough_coins");
+      const r = CT.gachaRoll(Math.random, bannerId, count, w.pity);
+      results = r.results.map((x) => { const isNew = !w.collection[x.id]; w.collection[x.id] = (w.collection[x.id] || 0) + 1; return Object.assign(x, { new: isNew }); });
+      w.coins -= cost; w.pity = r.pity; w.pulls += count;
+      saveLocal(w); coins = w.coins;
+    }
+    // lo que sale del gacha también entra en el álbum
+    for (const x of results) CT.album.add(x.id);
+    CT.saveProfile();
+    return { results, coins };
+  };
+
+  /* ---------- Cobrar una partida ---------- */
+  // run = { id, mode, diff, stage, wins, practice }
+  W.claim = async function (run) {
+    const calc = CT.runReward(run);
+    if (W.isCloud()) {
+      const { data, error } = await C().client.rpc("claim_reward", {
+        p_run: run.id, p_mode: run.mode, p_diff: run.diff, p_stage: run.mode === "survival" ? null : run.stage,
+        p_wins: run.wins | 0, p_practice: !!run.practice
+      });
+      if (error) throw new Error(code(error));
+      C().profile.coins = data.coins;
+      return { gained: data.gained, coins: data.coins, calc, capped: data.gained < calc.coins };
+    }
+    const w = local();
+    if (w.claimed.includes(run.id)) throw new Error("already_claimed");
+    w.claimed = [run.id].concat(w.claimed).slice(0, 50);
+    w.coins += calc.coins;
+    saveLocal(w);
+    return { gained: calc.coins, coins: w.coins, calc, capped: false };
+  };
+
+  /* ---------- Equipo propio ---------- */
+  // team = { name, formation, slots[11] (ids o null), captainId }
+  W.saveTeam = async function (team) {
+    const clean = { name: String(team.name || "").slice(0, 24), formation: team.formation, slots: team.slots.map((x) => x || null), captainId: team.captainId || null };
+    if (clean.captainId && !clean.slots.includes(clean.captainId)) clean.captainId = null;
+    if (W.isCloud()) {
+      const { data, error } = await C().client.rpc("save_team", { p_team: clean });
+      if (error) throw new Error(code(error));
+      C().profile.team = data;
+      return data;
+    }
+    const w = local();
+    w.team = clean; saveLocal(w);
+    return clean;
+  };
+})(typeof window !== "undefined" ? window : globalThis);
+
 /* ---- 07-ui.js ---- */
 /* ==========================================================================
    Interfaz: pantallas, partido en directo y progreso
@@ -3619,14 +4657,14 @@ button.lb.chem:hover, button.lb.chem:focus-visible { border-color: var(--good); 
     const p = s.player, chem = opts.chem ? opts.chem.perPlayer[p.id] || 0 : 0;
     const hide = opts.blind;
     const cap = opts.captainId === p.id;
-    return `<div class="slot filled ${hide ? "r-hidden" : rar(p.r)}" title="${esc(CT.pname(p))}">
+    return `<button type="button" class="slot filled ${hide ? "r-hidden" : rar(p.r)}" title="${esc(CT.pname(p))} · ${esc(t("pfInfo"))}" data-act="player" data-id="${p.id}"${hide ? ' data-blind="1"' : ""}>
       ${cap ? '<span class="slot-cap">C</span>' : ""}
       <img class="slot-sprite" src="${CT.spriteURL(p, "stand", 2)}" alt="" aria-hidden="true">
       <span class="slot-r">${hide ? "?" : p.r}</span>
       <span class="slot-n">${esc(CT.pname(p, true))}</span>
       <span class="slot-f">${flag(p.nat)}</span>
       <span class="slot-chem c${chem}" aria-label="${t("chem")} ${chem}/3"><i></i><i></i><i></i></span>
-    </div>`;
+    </button>`;
   }
   function pitchHtml(formation, slots, opts) {
     const rows = CT.FORMATIONS[formation];
@@ -3655,7 +4693,8 @@ button.lb.chem:hover, button.lb.chem:focus-visible { border-color: var(--good); 
     return `<button class="pcard ${hide ? "r-hidden" : rar(p.r)}" data-act="pick" data-id="${p.id}" style="--i:${i}" aria-label="${esc(CT.pname(p))}, ${CT.posName(p.pos)}${hide ? "" : ", " + p.r}">
       <span class="pc-key" aria-hidden="true">${i + 1}</span>
       <span class="pc-top"><span class="pc-r">${hide ? "?" : p.r}</span><span class="pc-pos">${CT.posLabel(p.pos)}</span></span>
-      <img class="pc-sprite" src="${CT.spriteURL(p, i % 2 ? "run1" : "stand", 5)}" alt="" aria-hidden="true">
+      <span class="pc-info" data-act="player" data-id="${p.id}"${hide ? ' data-blind="1"' : ""} title="${esc(t("pfInfo"))}" aria-label="${esc(t("pfInfo"))}">i</span>
+      ${CT.faceHTML(p, "pc-face", 4)}
       <span class="pc-name">${esc(CT.pname(p, true))}</span>
       ${CT.pname(p) !== CT.pname(p, true) ? `<span class="pc-full">${esc(CT.pname(p))}</span>` : ""}
       <span class="pc-alt">${esc(altName(p))}</span>
@@ -3695,8 +4734,11 @@ button.lb.chem:hover, button.lb.chem:focus-visible { border-color: var(--good); 
       </div>
     </section>
     <nav class="home-nav">
+      <button class="btn primary" data-act="go" data-to="gacha">🎰 ${t("navGacha")} <small>🪙 ${CT.wallet.state().coins}</small></button>
+      <button class="btn ghost" data-act="go" data-to="team">${t("navTeam")}</button>
       <button class="btn ghost" data-act="go" data-to="album">${t("navAlbum")} <small>${CT.album.size}/${CT.PLAYERS.length}</small></button>
       <button class="btn ghost" data-act="go" data-to="records">${t("navRecords")}</button>
+      ${CT.cloud.enabled ? `<button class="btn ghost" data-act="go" data-to="account">${CT.cloud.user ? "👤 " + esc((CT.cloud.profile && CT.cloud.profile.username) || t("navAccount")) : t("navAccount")}</button>` : ""}
       <button class="btn ghost" data-act="how">${t("navHow")}</button>
       <button class="btn ghost" data-act="settings">${t("navSettings")}</button>
     </nav>`;
@@ -4170,6 +5212,7 @@ button.lb.chem:hover, button.lb.chem:focus-visible { border-color: var(--good); 
         <div><b>${R.top ? esc(CT.pname(CT.BY_ID[R.top[0]], true)) : "—"}</b><span>${t("topScorer")}${R.top ? ` (${R.top[1]})` : ""}</span></div>
       </div>
       ${R.champLine ? `<p class="champ-line">${R.champLine}</p>` : ""}
+      <div class="window reward" id="end-reward">${rewardHtml(R.reward)}</div>
       ${S.wc ? `<div class="btn-row center">${!S.wc.champion ? `<button class="btn ghost" data-act="simRest">${t("simRest")}</button>` : `<button class="btn ghost" data-act="viewBracket">${t("tabBracket")}</button>`}</div>` : ""}
       ${R.lines.length ? `<p class="pixel end-lines">${R.lines.map(esc).join("&nbsp;&nbsp; ")}</p>` : ""}
       <div class="window share">
@@ -4188,6 +5231,147 @@ button.lb.chem:hover, button.lb.chem:focus-visible { border-color: var(--good); 
       </div>
     </div>`;
   };
+  function rewardHtml(rw) {
+    if (!rw) return "";
+    const parts = (rw.calc ? rw.calc.parts : []).map((p) => {
+      if (p.k === "stage") return `${t("rw.stage")}: ${t("rwStage." + p.s)} · ${p.v}`;
+      if (p.k === "surv") return `${t("rw.surv", { n: p.n })} · ${p.v}`;
+      if (p.k === "diff") return t("rw.diff", { x: p.x });
+      if (p.k === "mode") return t("rw.mode", { x: p.x });
+      if (p.k === "practice") return t("rw.practice", { x: p.x });
+      if (p.k === "daily") return t("rw.daily", { v: p.v });
+      return "";
+    }).filter(Boolean);
+    const head = rw.status === "pending" ? `<b class="rw-n">${t("rwPending")}</b>`
+      : rw.status === "error" ? `<b class="rw-n err">${esc(t("rwErr", { e: t("err." + rw.err) !== "err." + rw.err ? t("err." + rw.err) : rw.err }))}</b>`
+      : `<b class="rw-n">🪙 ${t("rwGain", { n: rw.gained })}</b><span class="muted small">${t("rwBalance", { n: rw.coins })}</span>`;
+    return `<div class="rw-head">${head}</div>
+      ${parts.length ? `<p class="rw-parts">${parts.map(esc).join(" · ")}</p>` : ""}
+      ${rw.capped ? `<p class="small gold-txt">${t("rwCapped")}</p>` : ""}
+      ${rw.status === "ok" ? `<div class="btn-row center"><button class="btn primary" data-act="go" data-to="gacha">🎰 ${t("navGacha")}</button></div>` : ""}`;
+  }
+  function paintReward() {
+    const el = $("#end-reward");
+    if (el && S.run && S.run.endInfo) el.innerHTML = rewardHtml(S.run.endInfo.reward);
+  }
+
+  /* ------------------------------------------------------------ gacha */
+  const coinChip = () => `<span class="coin-chip" title="${t("coins")}">🪙 <b>${CT.wallet.state().coins}</b></span>`;
+  Screens.gacha = function () {
+    const G = (S.gacha = S.gacha || { banner: "general", last: null, busy: false });
+    const W = CT.wallet.state();
+    const b = CT.BANNER_BY_ID[G.banner];
+    const pool = CT.bannerPool(b.id), rates = CT.bannerRates(b.id);
+    const all = [].concat(pool.legend, pool.gold, pool.silver, pool.bronze);
+    const owned = all.filter((p) => W.collection[p.id]).length;
+    const featured = [].concat(pool.legend, pool.gold).slice(0, 5);
+    const pityLeft = Math.max(1, CT.ECON.pity - W.pity);
+    const btn = (n) => { const cost = n === 10 ? b.cost[1] : b.cost[0]; return `<button class="btn ${n === 10 ? "primary" : "ghost"} big pull-btn" data-act="pull" data-n="${n}" ${W.coins < cost || G.busy ? "disabled" : ""}>
+        <span>${t(n === 10 ? "gPull10" : "gPull1")}</span><small>🪙 ${cost}</small></button>`; };
+    return `
+    <div class="screen-head"><button class="btn ghost sm" data-act="go" data-to="home">${t("back")}</button><h2 class="h2">${t("gTitle")}</h2>${coinChip()}</div>
+    <p class="muted small">${W.cloud ? "☁️ " + t("gCloud") : t("gLocal")} ${!W.cloud && CT.cloud.enabled ? `<button class="btn ghost xs" data-act="go" data-to="account">${t("gLoginCta")}</button>` : ""}</p>
+    <div class="banner-tabs" role="tablist">
+      ${CT.BANNERS.map((x) => `<button class="banner-tab${x.id === b.id ? " sel" : ""}" role="tab" aria-selected="${x.id === b.id}" data-act="banner" data-b="${x.id}"><span>${x.icon}</span>${t("b." + x.id)}</button>`).join("")}
+    </div>
+    <section class="banner banner-${b.id}">
+      <div class="banner-info">
+        <h3 class="banner-title">${b.icon} ${t("b." + b.id)}</h3>
+        <p>${t("b." + b.id + ".d")}</p>
+        <p class="muted small">${t("gPool", { n: all.length })} · ${t("gOwned", { n: owned, t: all.length })}</p>
+        <div class="rates">${["legend", "gold", "silver", "bronze"].filter((k) => rates[k] > 0).map((k) => `<span class="rate r-${k}">${t("tier." + k)} <b>${rates[k]}%</b></span>`).join("")}</div>
+        <p class="muted small">${t("gGuarantee")}${pool.legend.length ? " " + t("gPity", { n: pityLeft }) + "." : ""}</p>
+      </div>
+      <div class="banner-feat">
+        <span class="lbl">${t("gFeatured")}</span>
+        <div class="feat-row">${featured.map((p) => `<button class="feat ${rar(p.r)}" data-act="player" data-id="${p.id}" title="${esc(CT.pname(p))}">${CT.faceHTML(p, "feat-face", 3)}<b>${p.r}</b><small>${esc(CT.pname(p, true))}</small></button>`).join("")}</div>
+      </div>
+      <div class="pull-row">${btn(1)}${btn(10)}</div>
+    </section>
+    <p class="muted small">${t("gHowCoins")}</p>
+    <div id="pull-result">${G.last ? pullResultHtml(G.last) : ""}</div>`;
+  };
+  function pullResultHtml(res) {
+    return `<h3 class="lbl">${t("gResult")}</h3>
+      <div class="pull-grid">${res.map((x, i) => { const p = CT.BY_ID[x.id]; if (!p) return ""; const n = CT.wallet.owned(p.id);
+        return `<button class="pull-card r-${x.tier}" style="--i:${i}" data-act="player" data-id="${p.id}">
+          ${x.new ? `<span class="pull-new">${t("gNew")}</span>` : `<span class="pull-dup">×${n}</span>`}
+          ${CT.faceHTML(p, "pull-face", 4)}
+          <span class="pull-r">${p.r}</span><span class="pull-pos">${CT.posLabel(p.pos)}</span>
+          <span class="pull-n">${esc(CT.pname(p, true))}</span><span class="pull-f">${flag(p.nat)}</span>
+          <span class="pull-t">${t("tier." + x.tier)}</span></button>`; }).join("")}</div>
+      <div class="btn-row center"><button class="btn ghost" data-act="go" data-to="team">${t("gToTeam")}</button></div>`;
+  }
+
+  /* ------------------------------------------------------------ mi equipo */
+  function teamDraft() {
+    if (S.myTeam) return S.myTeam;
+    const saved = CT.wallet.state().team;
+    const formation = saved && CT.FORMATIONS[saved.formation] ? saved.formation : "4-4-2";
+    const n = CT.FORMATIONS[formation].flat().length;
+    const slots = saved && Array.isArray(saved.slots) ? saved.slots.slice(0, n) : [];
+    while (slots.length < n) slots.push(null);
+    S.myTeam = { name: (saved && saved.name) || t("tmDefaultName"), formation, slots: slots.map((id) => (id && CT.BY_ID[id] && CT.wallet.owned(id) ? id : null)), captainId: saved ? saved.captainId : null, dirty: false };
+    return S.myTeam;
+  }
+  Screens.team = function () {
+    const T = teamDraft();
+    const W = CT.wallet.state();
+    const slots = CT.teamFromSaved(T);
+    const tr = CT.teamRatings(slots, T.captainId);
+    const coll = Object.keys(W.collection).map((id) => CT.BY_ID[id]).filter(Boolean).sort((a, b) => b.r - a.r);
+    const inTeam = new Set(T.slots.filter(Boolean));
+    let k = 0;
+    const rows = CT.FORMATIONS[T.formation];
+    return `
+    <div class="screen-head"><button class="btn ghost sm" data-act="go" data-to="home">${t("back")}</button><h2 class="h2">${t("tmTitle")}</h2>${coinChip()}</div>
+    <p class="muted">${t("tmIntro")}</p>
+    ${!coll.length ? `<div class="window acc-box"><p>${t("tmEmpty")}</p><button class="btn primary" data-act="go" data-to="gacha">🎰 ${t("navGacha")}</button></div>` : `
+    <div class="draft">
+      <div class="draft-left">
+        <div class="pitch" role="img" aria-label="${t("formationLabel", { f: T.formation })}">
+          <div class="pitch-lines"></div>
+          ${rows.map((row) => `<div class="prow">${row.map((pos) => { const i = k++; const p = T.slots[i] ? CT.BY_ID[T.slots[i]] : null;
+            return p ? `<button type="button" class="slot filled ${rar(p.r)}${p.pos !== pos ? " oop" : ""}" data-act="teamSlot" data-i="${i}" title="${esc(CT.pname(p))}">
+                ${T.captainId === p.id ? '<span class="slot-cap">C</span>' : ""}
+                <img class="slot-sprite" src="${CT.spriteURL(p, "stand", 2)}" alt="" aria-hidden="true">
+                <span class="slot-r">${p.r - (p.pos !== pos ? CT.OUT_OF_POS : 0)}</span><span class="slot-n">${esc(CT.pname(p, true))}</span><span class="slot-f">${flag(p.nat)}</span></button>`
+              : `<button type="button" class="slot empty open" data-act="teamSlot" data-i="${i}"><span class="slot-pos">${CT.posLabel(pos)}</span><span class="slot-free">+</span></button>`; }).join("")}</div>`).join("")}
+        </div>
+        ${lineBar(tr, false)}
+        <div class="bonds-box"><div class="bonds-head"><h3 class="lbl">${t("bonds")}</h3></div>${bondsHtml(tr.chem.bonds)}</div>
+      </div>
+      <div class="draft-right team-side">
+        <label class="lbl" for="tm-name">${t("tmName")}</label>
+        <input class="txt" id="tm-name" maxlength="24" value="${esc(T.name)}">
+        <h3 class="lbl">${t("tmFormation")}</h3>
+        <div class="chips">${Object.keys(CT.FORMATIONS).map((f) => `<button class="chip${f === T.formation ? " sel" : ""}" data-act="teamFormation" data-f="${f}">${f}</button>`).join("")}</div>
+        <label class="lbl" for="tm-cap">${t("tmCaptain")}</label>
+        <select class="txt" id="tm-cap"><option value="">${t("tmNone")}</option>${T.slots.filter(Boolean).map((id) => CT.BY_ID[id]).sort((a, b) => b.r - a.r).map((p) => `<option value="${p.id}"${p.id === T.captainId ? " selected" : ""}>${esc(CT.pname(p))} (${p.r})</option>`).join("")}</select>
+        <p class="muted small">${t("tmPickHint")}</p>
+        <button class="btn primary big" data-act="teamSave">${t("tmSave")}${T.dirty ? " •" : ""}</button>
+      </div>
+    </div>
+    <h3 class="lbl">${t("tmCollection", { n: coll.length })}</h3>
+    <div class="coll-grid">${coll.map((p) => `<button class="coll-card ${rar(p.r)}${inTeam.has(p.id) ? " in" : ""}" data-act="player" data-id="${p.id}">
+        ${CT.faceHTML(p, "coll-face", 3)}<b>${p.r}</b><span class="cc-pos">${CT.posLabel(p.pos)}</span><span class="cc-n">${esc(CT.pname(p, true))}</span><span class="cc-x">×${W.collection[p.id]}</span></button>`).join("")}</div>`}`;
+  };
+  function teamPickerHtml(i) {
+    const T = teamDraft();
+    const pos = CT.FORMATIONS[T.formation].flat()[i];
+    const W = CT.wallet.state();
+    const used = new Set(T.slots.filter((x, j) => x && j !== i));
+    const list = Object.keys(W.collection).map((id) => CT.BY_ID[id]).filter((p) => p && !used.has(p.id))
+      .sort((a, b) => (b.pos === pos) - (a.pos === pos) || b.r - a.r);
+    return `<h2 class="h2">${t("tmPick", { pos: CT.posName(pos).toLowerCase() })}</h2>
+      ${T.slots[i] ? `<button class="btn ghost" data-act="teamPut" data-i="${i}" data-id="">${t("tmRemove")}</button>` : ""}
+      ${list.length ? `<div class="pick-list">${list.map((p) => `<button class="pick-row ${rar(p.r)}" data-act="teamPut" data-i="${i}" data-id="${p.id}">
+          ${CT.faceHTML(p, "pick-face", 2)}<b>${p.pos === pos ? p.r : p.r - CT.OUT_OF_POS}</b><span class="pr-pos">${CT.posLabel(p.pos)}</span>
+          <span class="pr-n">${esc(CT.pname(p))}</span><span>${flag(p.nat)}</span>${p.pos !== pos ? `<small class="muted">${t("tmOut")}</small>` : ""}</button>`).join("")}</div>`
+        : `<p class="muted">${t("tmNoneFor")}</p>`}
+      <button class="btn primary" data-act="closeModal">${t("close")}</button>`;
+  }
+
   function trophySvg() {
     return `<svg viewBox="0 0 120 140"><defs><linearGradient id="tg" x1="0" x2="1"><stop offset="0" stop-color="#b8860b"/><stop offset=".45" stop-color="#ffe27a"/><stop offset="1" stop-color="#c9971c"/></linearGradient></defs>
       <path d="M30 8h60v30c0 22-13 38-30 42C43 76 30 60 30 38z" fill="url(#tg)"/><path d="M30 18H12c0 18 8 28 20 30M90 18h18c0 18-8 28-20 30" fill="none" stroke="url(#tg)" stroke-width="7"/>
@@ -4218,14 +5402,80 @@ button.lb.chem:hover, button.lb.chem:focus-visible { border-color: var(--good); 
       </div>
     </div>
     <div class="album-grid">
-      ${list.map((p) => { const has = CT.album.has(p.id); return `<div class="acard ${has ? rar(p.r) : "missing"}">
+      ${list.map((p) => { const has = CT.album.has(p.id); const open = has || F.missing; return `<div class="acard ${has ? rar(p.r) : "missing"}${open ? " clickable" : ""}"${open ? ` data-act="player" data-id="${p.id}"${has ? "" : ' data-blind="1"'} role="button" tabindex="0" aria-label="${esc(CT.pname(p))} · ${esc(t("pfInfo"))}"` : ""}>
         <span class="ac-r">${has ? p.r : "?"}</span><span class="ac-pos">${CT.posLabel(p.pos)}</span>
         <span class="ac-n">${has || F.missing ? esc(CT.pname(p)) : "???"}</span>
         <span class="ac-f">${flag(p.nat)}</span>
+        ${has ? CT.faceHTML(p, "ac-face", 3) : ""}
         ${has && p.tech.length ? `<span class="ac-t">${esc(CT.tname(p.tech[0]))}</span>` : !has ? `<span class="ac-t">${t("unknown")}</span>` : ""}
       </div>`; }).join("") || `<p class="muted">${t("albumEmpty")}</p>`}
     </div>`;
   };
+
+  /* ------------------------------------------------------------ cuenta */
+  Screens.account = function () {
+    const C = CT.cloud;
+    const head = `<div class="screen-head"><button class="btn ghost sm" data-act="go" data-to="home">${t("back")}</button><h2 class="h2">${t("accTitle")}</h2></div>`;
+    if (!C.enabled) return head + `<p class="note">${t("accOff")}</p>`;
+    if (C.status === "loading") return head + `<p class="muted">${t("accLoading")}</p>`;
+    const status = C.status === "syncing" ? `<p class="acc-status">${t("accSyncing")}</p>`
+      : C.status === "error" ? `<p class="acc-status err">${esc(t("accSyncErr", { e: C.error || "?" }))}</p>`
+      : C.user ? `<p class="acc-status ok">✓ ${t("accSynced")}</p>` : "";
+    if (!C.user) {
+      const prov = C.providers();
+      return head + `<div class="window acc-box">
+        <p>${t("accIntro")}</p>
+        ${S.acc && S.acc.sent ? `<p class="note gold">${esc(t("accSent", { e: S.acc.sent }))}</p>` : ""}
+        <form class="acc-form" data-form="login">
+          <label class="lbl" for="acc-email">${t("accEmail")}</label>
+          <input class="txt" id="acc-email" type="email" autocomplete="email" required placeholder="tu@email.com">
+          <button class="btn primary" type="submit">${t("accSend")}</button>
+        </form>
+        ${prov.length ? `<p class="muted small acc-or">${t("accOr")}</p><div class="acc-prov">${prov.map((pv) => `<button class="btn ghost" data-act="oauth" data-p="${esc(pv)}">${esc(pv.charAt(0).toUpperCase() + pv.slice(1))}</button>`).join("")}</div>` : ""}
+        <p class="muted small">${t("accLocalNote")}</p>
+        ${status}
+      </div>`;
+    }
+    const pr = C.profile || {};
+    const st = CT.stats;
+    const cell = (k, v) => `<div class="rc"><b>${v}</b><span>${t(k)}</span></div>`;
+    const cols = t("accBoardCols").split("|");
+    const board = S.acc && S.acc.board;
+    return head + `<div class="window acc-box">
+        <h3 class="h3">${pr.username ? esc(t("accHello", { n: pr.username })) : t("accNoName")}</h3>
+        <p class="muted small">${esc(t("accSignedAs", { e: C.user.email || C.user.id.slice(0, 8) }))}</p>
+        <form class="acc-form row" data-form="username">
+          <label class="lbl" for="acc-user">${t("accUser")}</label>
+          <input class="txt" id="acc-user" maxlength="20" value="${esc(pr.username || "")}" autocomplete="nickname">
+          <button class="btn ghost" type="submit">${t("accUserSave")}</button>
+          <span class="muted small">${t("accUserHint")}</span>
+        </form>
+        ${status}
+      </div>
+      <h3 class="lbl">${t("accStats")}</h3>
+      <div class="rec-grid">
+        ${cell("st.titles", st.titles)}${cell("st.finals", st.finals)}${cell("st.matches", st.matches)}${cell("st.wdl", `${st.w}-${st.d}-${st.l}`)}
+        ${cell("st.goals", st.gf)}${cell("st.best", st.bestSurv)}${cell("st.daily", st.daily)}<div class="rc"><b>${CT.album.size}/${CT.PLAYERS.length}</b><span>${t("navAlbum")}</span></div>
+        <div class="rc"><b>🪙 ${CT.wallet.state().coins}</b><span>${t("coins")}</span></div><div class="rc"><b>${Object.keys(CT.wallet.state().collection).length}</b><span>${t("tmCollection", { n: "" }).replace(/\s*\(\)\s*/, "")}</span></div>
+      </div>
+      <div class="acc-actions">
+        <button class="btn primary" data-act="go" data-to="gacha">🎰 ${t("navGacha")}</button>
+        <button class="btn ghost" data-act="go" data-to="team">${t("navTeam")}</button>
+        <button class="btn ghost" data-act="go" data-to="records">${t("navRecords")}</button>
+        <button class="btn ghost" data-act="go" data-to="album">${t("navAlbum")}</button>
+        <button class="btn ghost" data-act="logout">${t("accLogout")}</button>
+      </div>
+      <h3 class="lbl">${t("accBoard")}</h3>
+      ${!board ? `<p class="muted small">${t("accLoading")}</p>` : !board.length ? `<p class="muted small">${t("accBoardEmpty")}</p>` : `
+      <table class="table board"><thead><tr><th>#</th>${cols.map((c) => `<th>${esc(c)}</th>`).join("")}</tr></thead><tbody>
+        ${board.map((r, i) => `<tr class="${r.username === pr.username ? "me" : ""}"><td>${i + 1}</td><td class="bn">${esc(r.username)}</td><td>${r.titles}</td><td>${r.best_surv}</td><td>${r.wins}</td><td>${r.album_count}</td></tr>`).join("")}
+      </tbody></table>`}`;
+  };
+  async function loadBoard() {
+    S.acc = S.acc || {};
+    try { S.acc.board = await CT.cloud.leaderboard(); } catch (e) { S.acc.board = []; }
+    if (S.screen === "account") render();
+  }
 
   /* ------------------------------------------------------------ récords */
   Screens.records = function () {
@@ -4268,6 +5518,44 @@ button.lb.chem:hover, button.lb.chem:focus-visible { border-color: var(--good); 
   function howHtml() {
     return `<h2 class="h2">${t("howTitle")}</h2><ol class="how">${[1, 2, 3, 4, 5, 6].map((i) => `<li>${t("how" + i)}</li>`).join("")}</ol>
       <div class="modal-actions"><button class="btn ghost" data-act="chem">${t("chemTitle")}</button><button class="btn primary" data-act="closeModal">${t("close")}</button></div>`;
+  }
+
+  /* Ficha de jugador */
+  const TT_ICON = { shot: "⚽", drib: "💨", pass: "🎯", def: "🛡️", save: "🧤", combo: "🔗" };
+  function playerHtml(p, opts = {}) {
+    const hide = !!opts.blind;
+    const L = CT.settings.lang;
+    const sub = (id) => { const tt = CT.TECH[id]; const alt = L === "ja" ? tt.en : tt.ja || (L === "en" ? null : tt.en); return alt && alt !== CT.tname(id) ? alt : ""; };
+    const stars = (n) => "★".repeat(Math.round(n)) + "☆".repeat(Math.max(0, 5 - Math.round(n)));
+    const techs = p.tech.filter((id) => CT.TECH[id]).slice().sort((a, b) => CT.TECH[b].pow - CT.TECH[a].pow);
+    const bonds = CT.BONDS.filter((b) => b.members.includes(p.names.orig));
+    const ctxNames = new Set((opts.slots || []).filter((x) => x.player).map((x) => x.player.names.orig));
+    const goals = (CT.stats.scorers || {})[p.id] || 0;
+    const other = L === "ja" ? p.names.orig : p.names.ja;
+    return `<div class="pf">
+      <div class="pf-head ${hide ? "r-hidden" : rar(p.r)}">
+        ${CT.faceHTML(p, "pf-face", 8)}
+        <div class="pf-id">
+          <div class="pf-top"><span class="pf-r">${hide ? "?" : p.r}</span><span class="tag">${CT.posName(p.pos)}</span>${p.dt && p.dt.added ? `<span class="tag gold">${t("newChar")}</span>` : ""}</div>
+          <h2 class="pf-name">${esc(CT.pname(p))}</h2>
+          <div class="pf-alt">${esc(other)}</div>
+          <div class="pf-nat">${flag(p.nat)} ${esc(CT.natName(p.nat))}</div>
+          ${p.dt && p.dt.team ? `<div class="pf-team"><span class="muted small">${t("pfTeam")}:</span> ${esc(p.dt.team)}</div>` : ""}
+        </div>
+      </div>
+      <h3 class="lbl">${t("pfTech")}</h3>
+      ${techs.length ? `<ul class="pf-tech">${techs.map((id) => { const tt = CT.TECH[id]; return `<li>
+          <span class="pt-ic" aria-hidden="true">${TT_ICON[tt.type] || "✨"}</span>
+          <span class="pt-n"><b>${esc(CT.tname(id))}</b>${sub(id) ? `<small>${esc(sub(id))}</small>` : ""}</span>
+          <span class="pt-t">${t("tt." + tt.type)}${tt.air ? " · " + t("pfAir") : ""}</span>
+          <span class="pt-p" title="${t("pfPow")} ${tt.pow}/5">${stars(tt.pow)}</span></li>`; }).join("")}</ul>` : `<p class="muted small">${t("pfNoTech")}</p>`}
+      <h3 class="lbl">${t("pfBonds")}</h3>
+      ${bonds.length ? `<ul class="bond-list">${bonds.map((b) => `<li class="bond-item"><div class="bi-head"><b>${esc(CT.bondName(b))}</b><span class="tag">${t("pfNeed", { n: b.need })}</span></div>
+          <div class="bi-mem">${b.members.map((m) => { const q = CT.BY_NAME[m]; const nm = q ? CT.pname(q, true) : m; return `<span class="bm${ctxNames.has(m) || m === p.names.orig ? " have" : ""}">${q ? flag(q.nat) + " " : ""}${esc(nm)}</span>`; }).join("")}</div></li>`).join("")}</ul>` : `<p class="muted small">${t("pfNoBonds")}</p>`}
+      <h3 class="lbl">${t("pfYou")}</h3>
+      <div class="pf-you"><span>${CT.album.has(p.id) ? "✅ " + t("pfAlbum") : "▫️ " + t("pfNotAlbum")}</span><span>⚽ ${t("pfGoals")}: <b>${goals}</b></span></div>
+      <button class="btn primary" data-act="closeModal">${t("close")}</button>
+    </div>`;
   }
 
   /* Explicación de la química con el once actual: reglas, puntos de cada jugador y vínculos */
@@ -4325,7 +5613,7 @@ button.lb.chem:hover, button.lb.chem:focus-visible { border-color: var(--good); 
     if (S.screen === "end") buildShareImage();
   }
   CT.render = render;
-  const go = (screen) => { S.screen = screen; render(); window.scrollTo(0, 0); };
+  const go = (screen) => { S.screen = screen; render(); window.scrollTo(0, 0); if (screen === "account" && CT.cloud.user) loadBoard(); };
 
   /* ================================================================ FLUJO */
   function dailySeed() { return CT.hashStr("ctwd-daily-" + CT.todayKey()); }
@@ -4338,7 +5626,8 @@ button.lb.chem:hover, button.lb.chem:focus-visible { border-color: var(--good); 
     const seed = M.seeded ? dailySeed() : CT.randomSeed();
     const practice = !!(M.seeded && CT.daily[CT.todayKey()]);
     S.draft = CT.newDraft({ mode: S.mode, formation: S.setup.formation, seed, teamName: name, diff: S.setup.diff });
-    S.run = { mode: S.mode, diff: S.draft.diff, practice, seed, results: [], scorers: {}, lines: [], goals: 0, ga: 0 };
+    const runId = "r" + Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+    S.run = { id: runId, mode: S.mode, diff: S.draft.diff, practice, seed, results: [], scorers: {}, lines: [], goals: 0, ga: 0 };
     S.tactic = "bal";
     go("draft");
   }
@@ -4529,6 +5818,12 @@ button.lb.chem:hover, button.lb.chem:focus-visible { border-color: var(--good); 
       R.lines.join(" ") + "\n" + res +
       (top ? `\n👟 ${t("topScorer")}: ${CT.pname(CT.BY_ID[top[0]])} (${top[1]})` : "");
     R.endInfo = { champ: !!champ, title, sub, res, top, goals: R.goals, lines: R.lines, text, champLine: null };
+    // monedas de la partida (en el servidor si hay cuenta)
+    const stage = R.mode === "survival" ? null : champ ? "champ" : S.wc.userOut;
+    const claim = { id: R.id, mode: R.mode, diff: R.diff, stage, wins: R.mode === "survival" ? S.surv.wins : 0, practice: !!R.practice };
+    R.endInfo.reward = { status: "pending", calc: CT.runReward(claim) };
+    CT.wallet.claim(claim).then((r) => { R.endInfo.reward = Object.assign({ status: "ok" }, r); paintReward(); })
+      .catch((e) => { R.endInfo.reward = { status: "error", err: e.message, calc: R.endInfo.reward.calc }; paintReward(); });
     if (champ) { CT.sfx.trophy(); } else CT.sfx.lose();
     go("end");
     if (champ) setTimeout(() => CT.fx.confetti(4200), 200);
@@ -4627,8 +5922,56 @@ button.lb.chem:hover, button.lb.chem:focus-visible { border-color: var(--good); 
     albumPos(ds) { S.album.pos = ds.p; render(); },
     settings() { openModal(settingsHtml()); },
     how() { openModal(howHtml()); },
+    async oauth(ds) {
+      try { await CT.cloud.signInOAuth(ds.p); } catch (e) { toast(t("accSyncErr", { e: e.message })); }
+    },
+    async logout() {
+      await CT.cloud.signOut();
+      S.acc = {}; go("home");
+    },
+    banner(ds) { S.gacha.banner = ds.b; S.gacha.last = null; render(); },
+    async pull(ds) {
+      const G = S.gacha; if (G.busy) return;
+      G.busy = true; render();
+      const box = $("#pull-result"); if (box) box.innerHTML = `<p class="muted pulling">${t("gPulling")}</p>`;
+      try {
+        CT.sfx.kick();
+        const r = await CT.wallet.pull(G.banner, +ds.n);
+        G.last = r.results;
+        const best = r.results.some((x) => x.tier === "legend") ? "legend" : r.results.some((x) => x.tier === "gold") ? "gold" : null;
+        if (best === "legend") { CT.sfx.trophy(); setTimeout(() => CT.fx.confetti(2600), 300); } else if (best === "gold") CT.sfx.goal(); else CT.sfx.click();
+      } catch (e) { toast(t("err." + e.message) !== "err." + e.message ? t("err." + e.message) : e.message); }
+      G.busy = false; S.myTeam = null;
+      if (S.screen === "gacha") render();
+    },
+    teamSlot(ds) { openModal(teamPickerHtml(+ds.i)); },
+    teamPut(ds) {
+      const T = teamDraft(); T.slots[+ds.i] = ds.id || null;
+      if (T.captainId && !T.slots.includes(T.captainId)) T.captainId = null;
+      T.dirty = true; closeModal(); render();
+    },
+    teamFormation(ds) {
+      const T = teamDraft(); if (T.formation === ds.f) return;
+      // recoloca a los que ya estaban: primero en su posición, luego en los huecos que queden
+      const players = T.slots.filter(Boolean).map((id) => CT.BY_ID[id]);
+      const pos = CT.FORMATIONS[ds.f].flat(); const slots = pos.map(() => null);
+      for (const p of players.slice().sort((a, b) => b.r - a.r)) { const i = pos.findIndex((x, j) => x === p.pos && !slots[j]); if (i >= 0) slots[i] = p.id; }
+      for (const p of players) if (!slots.includes(p.id)) { const i = slots.findIndex((x) => !x); if (i >= 0) slots[i] = p.id; }
+      T.formation = ds.f; T.slots = slots; T.dirty = true; render();
+    },
+    async teamSave() {
+      const T = teamDraft();
+      const nm = $("#tm-name"); if (nm) T.name = nm.value.trim().slice(0, 24) || t("tmDefaultName");
+      try { await CT.wallet.saveTeam(T); T.dirty = false; toast(t("tmSaved")); render(); }
+      catch (e) { toast(t("tmErr", { e: t("err." + e.message) !== "err." + e.message ? t("err." + e.message) : e.message })); }
+    },
+    player(ds) {
+      const p = CT.BY_ID[ds.id]; if (!p) return;
+      const slots = S.screen === "team" ? CT.teamFromSaved(teamDraft()) : (S.screen === "draft" || S.screen === "captain") && S.draft ? S.draft.slots : S.team ? S.team.slots : [];
+      openModal(playerHtml(p, { blind: ds.blind === "1", slots }));
+    },
     chem() {
-      const slots = (S.screen === "draft" || S.screen === "captain") && S.draft ? S.draft.slots : S.team ? S.team.slots : [];
+      const slots = S.screen === "team" ? CT.teamFromSaved(teamDraft()) : (S.screen === "draft" || S.screen === "captain") && S.draft ? S.draft.slots : S.team ? S.team.slots : [];
       openModal(chemHtml(slots));
     },
     closeModal() { closeModal(); },
@@ -4661,7 +6004,26 @@ button.lb.chem:hover, button.lb.chem:focus-visible { border-color: var(--good); 
       const fn = A_[b.dataset.act];
       if (fn) { e.preventDefault(); fn(b.dataset, b, e); }
     });
-    document.addEventListener("input", (e) => {
+    document.addEventListener("submit", async (e) => {
+      const f = e.target.closest("[data-form]");
+      if (!f) return;
+      e.preventDefault();
+      const btn = f.querySelector("button[type=submit]"); if (btn) btn.disabled = true;
+      try {
+        if (f.dataset.form === "login") {
+          const email = $("#acc-email").value.trim();
+          await CT.cloud.signInEmail(email);
+          S.acc = Object.assign(S.acc || {}, { sent: email }); render();
+        } else if (f.dataset.form === "username") {
+          const r = await CT.cloud.setUsername($("#acc-user").value);
+          toast(r === null ? t("accUserOk") : r === "taken" ? t("accUserTaken") : r === "bad" ? t("accUserBad") : t("accSyncErr", { e: r }));
+          if (r === null) { CT.cloud.push(); loadBoard(); }
+        }
+      } catch (er) { toast(t("accSyncErr", { e: er.message || String(er) })); }
+      if (btn) btn.disabled = false;
+    });
+        document.addEventListener("input", (e) => {
+      if (e.target.id === "tm-name" && S.myTeam) { S.myTeam.name = e.target.value; S.myTeam.dirty = true; }
       if (e.target.id === "album-q") {
         S.album.q = e.target.value; const pos = e.target.selectionStart; render();
         const q = $("#album-q"); if (q) { q.focus(); try { q.setSelectionRange(pos, pos); } catch (er) {} }
@@ -4670,9 +6032,11 @@ button.lb.chem:hover, button.lb.chem:focus-visible { border-color: var(--good); 
     document.addEventListener("change", (e) => {
       if (e.target.id === "album-missing") { S.album.missing = e.target.checked; render(); }
       if (e.target.id === "set-autoplay") { CT.settings.autoplay = e.target.checked; CT.saveProfile(); }
+      if (e.target.id === "tm-cap") { const T = teamDraft(); T.captainId = e.target.value || null; T.dirty = true; render(); }
     });
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && !$("#modal").hidden) { closeModal(); return; }
+      if ((e.key === "Enter" || e.key === " ") && e.target.matches(".acard.clickable")) { e.preventDefault(); A_.player(e.target.dataset); return; }
       if (e.target.matches("input, textarea")) return;
       if (S.screen === "draft" && S.draft) {
         if (/^[1-5]$/.test(e.key) && S.draft.current) { const p = S.draft.current.players[+e.key - 1]; if (p) doPick(p.id); }
@@ -4685,6 +6049,11 @@ button.lb.chem:hover, button.lb.chem:focus-visible { border-color: var(--good); 
     CT.loadProfile();
     bind();
     render();
+    // retratos propios opcionales (img/players/index.json); si los hay, se vuelve a pintar
+    CT.loadPhotos().then((ok) => { if (ok && !S.live) render(); });
+    // cuentas (Supabase), si la web tiene config.js con las claves
+    CT.cloud.on(() => { if (!S.live && ["home", "account", "records", "album", "gacha", "team"].includes(S.screen)) { if (S.screen !== "team" || !(S.myTeam && S.myTeam.dirty)) S.myTeam = null; render(); } });
+    CT.cloud.init().then(() => { if (CT.cloud.user && S.screen === "account") loadBoard(); });
   };
 })(typeof window !== "undefined" ? window : globalThis);
 
